@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTOP CHONBURI - ระบบสารสนเทศผลิตภัณฑ์ OTOP จังหวัดชลบุรี</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-blue: #0f172a;
+            --accent-blue: #1e3a8a;
+            --brand-gold: #d97706;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 30px -3px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 6%;
+            background-color: #ffffff;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-title h2 {
+            font-size: 1.15rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .brand-title p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a i {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .nav-links a.active i,
+        .nav-links a:hover i {
+            color: var(--accent-blue);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            background-position: center 35%;
+            background-size: cover;
+            background-repeat: no-repeat;
+
+            /* สั่งให้สไลด์เปลี่ยนรูปทุก 12 วินาที */
+            animation: heroSlide 12s infinite ease-in-out;
+        }
+
+        /* โค้ดสลับรูปภาพพื้นหลัง */
+        @keyframes heroSlide {
+
+            0%,
+            28% {
+                background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%),
+                    url("assets/img/chonnn.png");
+            }
+
+            33%,
+            61% {
+                background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%),
+                    url("assets/img/พื้นหลัง2.jpg");
+            }
+
+            66%,
+            94% {
+                background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%),
+                    url("assets/img/พื้นหลัง5.png");
+            }
+
+            100% {
+                background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%),
+                    url("assets/img/พื้นหลัง4.jpg");
+            }
+        }
+
+        .hero-title-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            opacity: 0.95;
+        }
+
+        /* --- SEARCH CONTAINER & GLASSMORPHISM --- */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 820px;
+            /* ปรับเพิ่มความกว้างขยายรองรับ Select 2 ช่อง */
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 6px 6px 6px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            background: #ffffff;
+            box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.25);
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .search-box i.fa-search-icon {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            background: transparent;
+        }
+
+        .search-box select {
+            border: none;
+            border-left: 1px solid var(--border-color);
+            outline: none;
+            padding: 0 12px;
+            font-size: 0.88rem;
+            color: #475569;
+            background: transparent;
+            cursor: pointer;
+            height: 36px;
+            font-weight: 500;
+        }
+
+        .search-box button {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.92rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+            white-space: nowrap;
+        }
+
+        .search-box button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(30, 58, 138, 0.4);
+            background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+        }
+
+        /* --- AUTOCOMPLETE SUGGESTIONS DROPDOWN --- */
+        .search-suggestions {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: none;
+            z-index: 50;
+            text-align: left;
+        }
+
+        .search-suggestions.active {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .suggestion-item {
+            padding: 12px 20px;
+            font-size: 0.88rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.15s ease;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: #f8fafc;
+            color: var(--accent-blue);
+        }
+
+        .suggestion-item i {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        /* --- CONTAINER COMMON --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 45px 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .section-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            letter-spacing: -0.01em;
+        }
+
+        /* --- CATEGORY SECTION --- */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            padding: 20px 16px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #eff6ff;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: all 0.25s ease;
+        }
+
+        .category-card:hover {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .category-card:hover .category-icon-wrapper {
+            background: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        /* --- RECOMMENDED PRODUCTS --- */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .view-all {
+            text-decoration: none;
+            color: var(--accent-blue);
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            transition: gap 0.2s ease;
+        }
+
+        .view-all:hover {
+            gap: 10px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 22px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: #cbd5e1;
+        }
+
+        .product-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 145px;
+            overflow: hidden;
+            background-color: #f1f5f9;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.06);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
+            color: #ffffff;
+            font-size: 0.68rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .product-info {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-dark);
+        }
+
+        .product-location {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: auto;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary-blue);
+            color: #94a3b8;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.82rem;
+            font-weight: 300;
+            margin-top: auto;
+            border-top: 1px solid #1e293b;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .search-box select {
+                display: none;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. Header / Navbar -->
+    <nav class="navbar">
+        <div class="brand-logo">
+            <a href="index.html">
+                <img class="logo-chon" src="assets/img/logo chon.png" alt="ตราจังหวัด"
+                    onerror="this.src='https://via.placeholder.com/40'">
+                <img class="logo-cdd" src="assets/img/กรมการพัฒนาชุมชน-Photoroom.png" alt="กรมการพัฒนาชุมชน"
+                    onerror="this.src='https://via.placeholder.com/40'">
+                <img class="logo-otop" src="assets/img/otoplogo.gif" alt="OTOP"
+                    onerror="this.src='https://via.placeholder.com/40'">
+
+                <div class="brand-title">
+                    <h2>OTOP CHONBURI</h2>
+                    <p>ระบบสารสนเทศผลิตภัณฑ์ OTOP จังหวัดชลบุรี</p>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i>หน้าแรก</a></li>
+            <li><a href="product.html"><i class="fa-solid fa-magnifying-glass"></i>ค้นหาผลิตภัณฑ์</a></li>
+            <li><a href="product-detail.html"><i class="fa-solid fa-file-lines"></i>รายละเอียดผลิตภัณฑ์</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-phone"></i>ติดต่อเรา</a></li>
+        </ul>
+    </nav>
+
+    <!-- 2. Hero Section -->
+    <header class="hero">
+        <span class="hero-title-badge">Chonburi Wisdom & Local Products</span>
+        <h1>OTOP จังหวัดชลบุรี</h1>
+        <p>ภูมิปัญญาไทย สู่ผลิตภัณฑ์คุณภาพระดับสากล ค้นหาและสนับสนุนสินค้าท้องถิ่นชลบุรีได้ที่นี่</p>
+
+        <!-- Search Box Container -->
+        <div class="search-container">
+            <form action="product.html" method="GET" class="search-box" id="searchForm">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass fa-search-icon"></i>
+                    <input type="text" name="keyword" id="searchInput" placeholder="พิมพ์ชื่อสินค้า หรือผู้ประกอบการ..."
+                        autocomplete="off">
+                </div>
+
+                <!-- เพิ่มตัวกรองประเภทผลิตภัณฑ์ -->
+                <select name="category" id="category">
+                    <option value="">ทุกประเภทผลิตภัณฑ์</option>
+                    <option value="food">อาหาร</option>
+                    <option value="drink">เครื่องดื่ม</option>
+                    <option value="cloth">ผ้าและเครื่องแต่งกาย</option>
+                    <option value="decor">ของใช้ ของตกแต่ง ของที่ระลึก</option>
+                    <option value="herb">สมุนไพรที่ไม่ใช่อาหาร</option>
+                </select>
+
+                <!-- ตัวกรองอำเภอ -->
+                <select name="district" id="district">
+                    <option value="">ทุกอำเภอ</option>
+                    <option value="เมืองชลบุรี">อำเภอเมืองชลบุรี</option>
+                    <option value="ศรีราชา">อำเภอศรีราชา</option>
+                    <option value="บางละมุง">อำเภอบางละมุง</option>
+                    <option value="สัตหีบ">อำเภอสัตหีบ</option>
+                    <option value="พานทอง">อำเภอพานทอง</option>
+                    <option value="พนัสนิคม">อำเภอพนัสนิคม</option>
+                    <option value="บ้านบึง">อำเภอบ้านบึง</option>
+                    <option value="บ่อทอง">อำเภอบ่อทอง</option>
+                    <option value="หนองใหญ่">อำเภอหนองใหญ่</option>
+                    <option value="เกาะจันทร์">อำเภอเกาะจันทร์</option>
+                    <option value="เกาะสีชัง">อำเภอเกาะสีชัง</option>
+                </select>
+
+                <button type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i> ค้นหา
+                </button>
+            </form>
+
+            <!-- Autocomplete Dropdown List -->
+            <div class="search-suggestions" id="suggestionsBox">
+                <div class="suggestion-item" data-value="คุกกี้ไรซ์เบอร์รี่ธัญพืช"><i
+                        class="fa-solid fa-clock-rotate-left"></i> คุกกี้ไรซ์เบอร์รี่ธัญพืช</div>
+                <div class="suggestion-item" data-value="กล้วยม้วนกรอบ"><i
+                        class="fa-solid fa-clock-rotate-left"></i>กล้วยม้วนกรอบ</div>
+                <div class="suggestion-item" data-value="น้ำปลาแท้ตราปลาคู่"><i
+                        class="fa-solid fa-clock-rotate-left"></i> น้ำปลาแท้ตราปลาคู่</div>
+                <div class="suggestion-item" data-value="พุดดิ้งมะพร้าวอ่อน"><i
+                        class="fa-solid fa-clock-rotate-left"></i> พุดดิ้งมะพร้าวอ่อน</div>
+                <div class="suggestion-item" data-value="ขนมงาพอง(งาดำ)"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ขนมงาพอง(งาดำ)</div>
+                <div class="suggestion-item" data-value="ขนมจีบปู"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ขนมจีบปู</div>
+                <div class="suggestion-item" data-value="ข้าวซ้อมมือ"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ข้าวซ้อมมือ</div>
+                <div class="suggestion-item" data-value="ข้าวแต๋นน้ำแตงโม"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ข้าวแต๋นน้ำแตงโม</div>
+                <div class="suggestion-item" data-value="คุกกี้ไรซ์เบอร์รี่ธัญพืช"><i
+                        class="fa-solid fa-clock-rotate-left"></i> คุกกี้ไรซ์เบอร์รี่ธัญพืช</div>
+                <div class="suggestion-item" data-value="แคปหมูไร้มัน"><i class="fa-solid fa-clock-rotate-left"></i>
+                    แคปหมูไร้มัน</div>
+                <div class="suggestion-item" data-value="แฮกึ๊นกุ้ง"><i class="fa-solid fa-clock-rotate-left"></i>
+                    แฮกึ๊นกุ้ง</div>
+                <div class="suggestion-item" data-value="มะม่วงกวนอบแห้ง"><i class="fa-solid fa-clock-rotate-left"></i>
+                    มะม่วงกวนอบแห้ง</div>
+                <div class="suggestion-item" data-value="มะม่วงแช่อิ่ม"><i class="fa-solid fa-clock-rotate-left"></i>
+                    มะม่วงแช่อิ่ม</div>
+                <div class="suggestion-item" data-value="กะปิหวาน"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กะปิหวาน</div>
+                <div class="suggestion-item" data-value="ทองม้วนงาดำ(รสเค็ม)"><i
+                        class="fa-solid fa-clock-rotate-left"></i> ทองม้วนงาดำ(รสเค็ม)</div>
+                <div class="suggestion-item" data-value="หมูแผ่น"><i class="fa-solid fa-clock-rotate-left"></i> หมูแผ่น
+                </div>
+                <div class="suggestion-item" data-value="หมูสะเต๊ะพร้อมทาน"><i
+                        class="fa-solid fa-clock-rotate-left"></i> หมูสะเต๊ะพร้อมทาน</div>
+                <div class="suggestion-item" data-value="น้ำพริกปลาเผาเค็ม"><i
+                        class="fa-solid fa-clock-rotate-left"></i> น้ำพริกปลาเผาเค็ม</div>
+                <div class="suggestion-item" data-value="ขนมดอกจอก"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ขนมดอกจอก</div>
+                <div class="suggestion-item" data-value="กุนเชียงหมู"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กุนเชียงหมู</div>
+                <div class="suggestion-item" data-value="น้ำพริก"><i class="fa-solid fa-clock-rotate-left"></i> น้ำพริก
+                </div>
+                <div class="suggestion-item" data-value="น้ำพริกแกงส้ม"><i class="fa-solid fa-clock-rotate-left"></i>
+                    น้ำพริกแกงส้ม</div>
+                <div class="suggestion-item" data-value="น้ำพริกแกงเผ็ด"><i
+                        class="fa-solid fa-clock-rotate-left"></i>น้ำพริกแกงเผ็ด</div>
+                <div class="suggestion-item" data-value="จระเข้หยอง"><i class="fa-solid fa-clock-rotate-left"></i>
+                    จระเข้หยอง</div>
+                <div class="suggestion-item" data-value="กล้วยกรอบเนยสด"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กล้วยกรอบเนยสด</div>
+                <div class="suggestion-item" data-value="ไข่เค็ม"><i class="fa-solid fa-clock-rotate-left"></i> ไข่เค็ม
+                </div>
+                <div class="suggestion-item" data-value="หมี่กรอบ"><i class="fa-solid fa-clock-rotate-left"></i>
+                    หมี่กรอบ</div>
+                <div class="suggestion-item" data-value="ทองม้วน"><i class="fa-solid fa-clock-rotate-left"></i> ทองม้วน
+                </div>
+                <div class="suggestion-item" data-value="ทองขยุ้ม"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ทองขยุ้ม</div>
+                <div class="suggestion-item" data-value="ซาลาเปาไส้หมูสับ"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ซาลาเปาไส้หมูสับ</div>
+                <div class="suggestion-item" data-value="พุดดิ้งรัน"><i class="fa-solid fa-clock-rotate-left"></i>
+                    พุดดิ้งรัน</div>
+                <div class="suggestion-item" data-value="กะหรี่ปั๊บงาดำ"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กะหรี่ปั๊บงาดำ</div>
+                <div class="suggestion-item" data-value="น้ำพริกปลาร้า"><i class="fa-solid fa-clock-rotate-left"></i>
+                    น้ำพริกปลาร้า</div>
+                <div class="suggestion-item" data-value="ซอสพริกศรีราชา"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ซอสพริกศรีราชา</div>
+                <div class="suggestion-item" data-value="เสื้อสุภาพบุรุษแขนยาวลายดอก"><i
+                        class="fa-solid fa-clock-rotate-left"></i> เสื้อสุภาพบุรุษแขนยาวลายดอก</div>
+                <div class="suggestion-item" data-value="กระเป๋าผ้า"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กระเป๋าผ้า</div>
+                <div class="suggestion-item" data-value="กระเป๋าผ้าลดโลกร้อน"><i
+                        class="fa-solid fa-clock-rotate-left"></i> กระเป๋าผ้าลดโลกร้อน</div>
+                <div class="suggestion-item" data-value="รองเท้าใส่ในบ้าน"><i class="fa-solid fa-clock-rotate-left"></i>
+                    รองเท้าใส่ในบ้าน</div>
+                <div class="suggestion-item" data-value="กระเป๋าจระเข้"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กระเป๋าจระเข้</div>
+                <div class="suggestion-item" data-value="กระเป๋าผ้าก้นมน"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กระเป๋าผ้าก้นมน</div>
+                <div class="suggestion-item" data-value="กระเป๋าสานลายดอกพิกุลสันไข่"><i
+                        class="fa-solid fa-clock-rotate-left"></i> กระเป๋าสานลายดอกพิกุลสันไข่</div>
+                <div class="suggestion-item" data-value="กระเป๋าถือ"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กระเป๋าถือ</div>
+                <div class="suggestion-item" data-value="กระเป๋าสานลายดอกพิกุลอัดขอบหูเดียว"><i
+                        class="fa-solid fa-clock-rotate-left"></i> กระเป๋าสานลายดอกพิกุลอัดขอบหูเดียว</div>
+                <div class="suggestion-item" data-value="หมวกถัก"><i class="fa-solid fa-clock-rotate-left"></i> หมวกถัก
+                </div>
+                <div class="suggestion-item" data-value="ผ้าคลุมไหล่"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ผ้าคลุมไหล่</div>
+                <div class="suggestion-item" data-value="หมอนยางพารา"><i class="fa-solid fa-clock-rotate-left"></i>
+                    หมอนยางพารา</div>
+                <div class="suggestion-item" data-value="HLS หมอนคอนทัวร์"><i
+                        class="fa-solid fa-clock-rotate-left"></i>HLS หมอนคอนทัวร์</div>
+                <div class="suggestion-item" data-value="ปลอกหมอนหนุน"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ปลอกหมอนหนุน</div>
+                <div class="suggestion-item" data-value="ผ้าบาติกลายบัวสวรรค์"><i
+                        class="fa-solid fa-clock-rotate-left"></i> ผ้าบาติกลายบัวสวรรค์</div>
+                <div class="suggestion-item" data-value="ผ้าตกแต่ง"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ผ้าตกแต่ง</div>
+                <div class="suggestion-item" data-value="กระเป๋าผ้า Ecoprint"><i
+                        class="fa-solid fa-clock-rotate-left"></i> กระเป๋าผ้า Ecoprint</div>
+                <div class="suggestion-item" data-value="กระเป๋าถัก"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กระเป๋าถัก</div>
+                <div class="suggestion-item" data-value="กระเป๋าสานเส้นพลาสติก"><i
+                        class="fa-solid fa-clock-rotate-left"></i> กระเป๋านสานเส้นพลาสติก</div>
+                <div class="suggestion-item" data-value="กระเป๋าผ้าบาติก"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กระเป๋าผ้าบาติก</div>
+                <div class="suggestion-item" data-value="เครื่องแต่งกาย"><i class="fa-solid fa-clock-rotate-left"></i>
+                    เครื่องแต่งกาย</div>
+                <div class="suggestion-item" data-value="ผ้าบาติก"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ผ้าบาติก</div>
+                <div class="suggestion-item" data-value="ต่างหูบางแสน"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ต่างหูบางแสน</div>
+                <div class="suggestion-item" data-value="สร้อยคอหาดพัทยา"><i class="fa-solid fa-clock-rotate-left"></i>
+                    สร้อยคอหาดพัทยา</div>
+                <div class="suggestion-item" data-value="สร้อยข้อมือหินสีมงคล"><i
+                        class="fa-solid fa-clock-rotate-left"></i> สร้อยข้อมือหินสีมงคล</div>
+                <div class="suggestion-item" data-value="เสื้อเขียนลายบาติก"><i
+                        class="fa-solid fa-clock-rotate-left"></i> เสื้อเขียนลายบาติก</div>
+                <div class="suggestion-item" data-value="เสื้อเชิ้ตบาติก"><i class="fa-solid fa-clock-rotate-left"></i>
+                    เสื้อเชิ้ตบาติก</div>
+                <div class="suggestion-item" data-value="เสื้อดอกประดู่สีฟ้า"><i
+                        class="fa-solid fa-clock-rotate-left"></i> เสื้อดอกประดู่สีฟ้า</div>
+                <div class="suggestion-item" data-value="เสื้อลินินเพ้นท์"><i class="fa-solid fa-clock-rotate-left"></i>
+                    เสื้อลินินเพ้นท์</div>
+                <div class="suggestion-item" data-value="เสื้อสำเร็จรูปผ้าไหม"><i
+                        class="fa-solid fa-clock-rotate-left"></i> เสื้อสำเร็จรูปผ้าไหม</div>
+                <div class="suggestion-item" data-value="หมอนอิงสมอเรือ"><i
+                        class="fa-solid fa-clock-rotate-left"></i>หมอนอิงสมอเรือ</div>
+                <div class="suggestion-item" data-value="เข็มขัดหนัง"><i class="fa-solid fa-clock-rotate-left"></i>
+                    เข็มขัดหนัง</div>
+                <div class="suggestion-item" data-value="ผลิตภัณฑ์ผ้าทอมือ"><i
+                        class="fa-solid fa-clock-rotate-left"></i> ผลิตภัณฑ์ผ้าทอมือ</div>
+                <div class="suggestion-item" data-value="ยางมัดผมจากเศษผ้า"><i
+                        class="fa-solid fa-clock-rotate-left"></i> ยางมัดผมจากเศษผ้า</div>
+                <div class="suggestion-item" data-value="กิ๊บติดผมจากเศษผ้า"><i
+                        class="fa-solid fa-clock-rotate-left"></i> กิ๊บติดผมจากเศษผ้า</div>
+                <div class="suggestion-item" data-value="กระเป๋า NAVY"><i class="fa-solid fa-clock-rotate-left"></i>
+                    กระเป๋า NAVY</div>
+                <div class="suggestion-item" data-value="ผ้าทอลายขัด"><i class="fa-solid fa-clock-rotate-left"></i>
+                    ผ้าทอลายขัด</div>
+                <div class="suggestion-item" data-value=" ผ้าบาติก(ผ้าชิ้น)"><i
+                        class="fa-solid fa-clock-rotate-left"></i> ผ้าบาติก(ผ้าชิ้น)</div>
+                <div class="suggestion-item" data-value="เรือพระเจ้าตาก"><i class="fa-solid fa-clock-rotate-left"></i>
+                    เรือพระเจ้าตาก</div>
+                <div class="suggestion-item" data-value="เรือฉลอม"><i class="fa-solid fa-clock-rotate-left"></i>
+                    เรือฉลอม</div>
+                <div class="suggestion-item" data-value="มาลัยดอกขจร"><i class="fa-solid fa-clock-rotate-left"></i>
+                    มาลัยดอกขจร/div>
+                    <div class="suggestion-item" data-value="ครกหินอ่างศิลาปิดฝา"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ครกหินอ่างศิลาปิดฝา</div>
+                    <div class="suggestion-item" data-value="ที่วางโทรศัพท์ต้นสน"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ที่วางโทรศัพท์ต้นสน</div>
+                    <div class="suggestion-item" data-value="ที่ใส่ทิชชู่(L)"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ที่ใส่ทิชชู่(L)</div>
+                    <div class="suggestion-item" data-value="พวงมาลัยมะลิทิชชู่"><i
+                            class="fa-solid fa-clock-rotate-left"></i> พวงมาลัยมะลิทิชชู่</div>
+                    <div class="suggestion-item" data-value="ผลิตภัณฑ์จากไม้ปืนหนังยาง"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ผลิตภัณฑ์จากไม้ปืนหนังยาง</div>
+                    <div class="suggestion-item" data-value="นาฬิกาแขวนกลม"><i
+                            class="fa-solid fa-clock-rotate-left"></i> นาฬิกาแขวนกลม</div>
+                    <div class="suggestion-item" data-value="ฝาชีตะแกรงลายไทย"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ฝาชีตะแกรงลายไทย</div>
+                    <div class="suggestion-item" data-value="จักสานพลาสติก"><i
+                            class="fa-solid fa-clock-rotate-left"></i> จักสานพลาสติก</div>
+                    <div class="suggestion-item" data-value="การ์ดอวยพรศิลปะการม้วนกระดาษ"><i
+                            class="fa-solid fa-clock-rotate-left"></i> การ์ดอวยพรศิลปะการม้วนกระดาษ</div>
+                    <div class="suggestion-item" data-value="พวงกุญแจไหมพรม"><i
+                            class="fa-solid fa-clock-rotate-left"></i> พวงกุญแจไหมพรม</div>
+                    <div class="suggestion-item" data-value="ไม้กวาดดอกหญ้า"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ไม้กวาดดอกหญ้า</div>
+                    <div class="suggestion-item" data-value="แก้วตัดจากขวด"><i
+                            class="fa-solid fa-clock-rotate-left"></i> แก้วตัดจากขวด</div>
+                    <div class="suggestion-item" data-value="สมุดทำมือ"><i class="fa-solid fa-clock-rotate-left"></i>
+                        สมุดทำมือ</div>
+                    <div class="suggestion-item" data-value="โคมไฟขวด"><i class="fa-solid fa-clock-rotate-left"></i>
+                        โคมไฟขวด</div>
+                    <div class="suggestion-item" data-value="ดอกกุหลาบ"><i class="fa-solid fa-clock-rotate-left"></i>
+                        ดอกกุหลาบ</div>
+                    <div class="suggestion-item" data-value="กล้วยไม้"><i class="fa-solid fa-clock-rotate-left"></i>
+                        กล้วยไม้</div>
+                    <div class="suggestion-item" data-value="ตุ๊กตาดินไทยวิจิตร"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ตุ๊กตาดินไทยวิจิตร</div>
+                    <div class="suggestion-item" data-value="ดอกบัว"><i class="fa-solid fa-clock-rotate-left"></i>
+                        ดอกบัว</div>
+                    <div class="suggestion-item" data-value="กระเป๋าพวงกุญแจ"><i
+                            class="fa-solid fa-clock-rotate-left"></i> กระเป๋าพวงกุญแจ</div>
+                    <div class="suggestion-item" data-value="น้ำกระเจี๊ยบ"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำกระเจี๊ยบ</div>
+                    <div class="suggestion-item" data-value="น้ำฟักข้าว"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำฟักข้าว</div>
+                    <div class="suggestion-item" data-value="น้ำมัลเบอร์รี่"><i
+                            class="fa-solid fa-clock-rotate-left"></i> น้ำมัลเบอร์รี่</div>
+                    <div class="suggestion-item" data-value="น้ำสำรอง"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำสำรอง</div>
+                    <div class="suggestion-item" data-value="น้ำเก๊กฮวย"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำเก๊กฮวย</div>
+                    <div class="suggestion-item" data-value="น้ำสมุนไพร"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำสมุนไพร</div>
+                    <div class="suggestion-item" data-value="น้ำฝรั่ง"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำฝรั่ง</div>
+                    <div class="suggestion-item" data-value="น้ำมะกรูด"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำมะกรูด</div>
+                    <div class="suggestion-item" data-value="ชาอู่หลงสดพร้อมดื่ม(ตราชาโบว์)"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ชาอู่หลงสดพร้อมดื่ม(ตราชาโบว์)</div>
+                    <div class="suggestion-item" data-value="ชามะลิสดพร้อมดื่ม(ตราชาโบว์)"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ชามะลิสดพร้อมดื่ม(ตราชาโบว์)</div>
+                    <div class="suggestion-item" data-value="ชาขาวสดพร้อมดื่ม(ตราชาโบว์)"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ชาขาวสดพร้อมดื่ม(ตราชาโบว์)</div>
+                    <div class="suggestion-item" data-value="น้ำลูกสำรอง"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำลูกสำรอง</div>
+                    <div class="suggestion-item" data-value="น้ำอัญชันน้ำผึ้งมะนาว"><i
+                            class="fa-solid fa-clock-rotate-left"></i> น้ำอัญชันน้ำผึ้งมะนาว</div>
+                    <div class="suggestion-item" data-value="น้ำมัลเบอร์รี่"><i
+                            class="fa-solid fa-clock-rotate-left"></i> น้ำมัลเบอร์รี่</div>
+                    <div class="suggestion-item" data-value="น้ำอ้อยคั้นสด"><i
+                            class="fa-solid fa-clock-rotate-left"></i> น้ำอ้อยคั้นสด</div>
+                    <div class="suggestion-item" data-value="น้ำนมข้าวโพด"><i class="fa-solid fa-clock-rotate-left"></i>
+                        น้ำนมข้าวโพด</div>
+                    <div class="suggestion-item" data-value="ยาหม่องเขียว"><i class="fa-solid fa-clock-rotate-left"></i>
+                        ยาหม่องเขียว</div>
+                    <div class="suggestion-item" data-value="Nature Hair Serum"><i
+                            class="fa-solid fa-clock-rotate-left"></i> Nature Hair Serum</div>
+                    <div class="suggestion-item" data-value="Moringa Shampoo"><i
+                            class="fa-solid fa-clock-rotate-left"></i> Moringa Shampoo</div>
+                    <div class="suggestion-item" data-value="สบู่เปลือกมังคุด"><i
+                            class="fa-solid fa-clock-rotate-left"></i> สบู่เปลือกมังคุด</div>
+                    <div class="suggestion-item" data-value="สติ๊กเกอร์ไล่ยุง"><i
+                            class="fa-solid fa-clock-rotate-left"></i> สติ๊กเกอร์ไล่ยุง</div>
+                    <div class="suggestion-item" data-value="ชุดพรรณกร"><i class="fa-solid fa-clock-rotate-left"></i>
+                        ชุดพรรณกร</div>
+                    <div class="suggestion-item" data-value="สมุนไพรสัตว์เลี้ยง(ชุด Pet Skincare)"><i
+                            class="fa-solid fa-clock-rotate-left"></i> สมุนไพรสัตว์เลี้ยง(ชุด Pet Skincare)</div>
+                    <div class="suggestion-item" data-value="สมุนไพรสัตว์เลี้ยง(แชมพูสูตรขมิ้นชัน)"><i
+                            class="fa-solid fa-clock-rotate-left"></i> สมุนไพรสัตว์เลี้ยง(แชมพูสูตรขมิ้นชัน)</div>
+                    <div class="suggestion-item" data-value="Marder Nature Facial Soap"><i
+                            class="fa-solid fa-clock-rotate-left"></i> Marder Nature Facial Soap</div>
+                    <div class="suggestion-item" data-value="ผลิตภัณฑ์บำรุงเส้นผมดอกอัญชัน"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ผลิตภัณฑ์บำรุงเส้นผมดอกอัญชัน</div>
+                    <div class="suggestion-item" data-value="สบู่แฟนซี"><i class="fa-solid fa-clock-rotate-left"></i>
+                        สบู่แฟนซี</div>
+                    <div class="suggestion-item" data-value="ถ่านดูดกลิ่น"><i class="fa-solid fa-clock-rotate-left"></i>
+                        ถ่านดูดกลิ่น</div>
+                    <div class="suggestion-item" data-value="ชายนี่เนล Shiny nail"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ชายนี่เนล Shiny nail</div>
+                    <div class="suggestion-item" data-value="ยาบรรเทาอาการปวดเมื่อย"><i
+                            class="fa-solid fa-clock-rotate-left"></i> ยาบรรเทาอาการปวดเมื่อย</div>
+                    <div class="suggestion-item" data-value="สบู่นมแพะตราอัสลา"><i
+                            class="fa-solid fa-clock-rotate-left"></i> สบู่นมแพะตราอัสลา</div>
+                    <div class="suggestion-item" data-value="สบู่ญาอาภา"><i class="fa-solid fa-clock-rotate-left"></i>
+                        สบู่ญาอาภา</div>
+                    <div class="suggestion-item" data-value="ถ่านอัดแท่ง"><i class="fa-solid fa-clock-rotate-left"></i>
+                        ถ่านอัดแท่ง/div>
+                        <div class="suggestion-item" data-value="สบู่สมุนไพรออแกนิค"><i
+                                class="fa-solid fa-clock-rotate-left"></i> สบู่สมุนไพรออแกนิค</div>
+                        <div class="suggestion-item" data-value="ขนมงาพอง(งาดำ)"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ขนมงาพอง(งาดำ)</div>
+                        <div class="suggestion-item" data-value="น้ำมันนวดตัวเพื่อสุขภาพ"><i
+                                class="fa-solid fa-clock-rotate-left"></i> น้ำมันนวดตัวเพื่อสุขภาพ</div>
+                        <div class="suggestion-item" data-value="หมักผมดอกอัญชัน"><i
+                                class="fa-solid fa-clock-rotate-left"></i> หมักผมดอกอัญชัน</div>
+                        <div class="suggestion-item" data-value="ฝาชีตะแกรงลายเพ้นท์ลาย"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ฝาชีตะแกรงลายเพ้นท์ลาย</div>
+                        <div class="suggestion-item" data-value="โคมไฟดอกไม้ผ้าใยบัว"><i
+                                class="fa-solid fa-clock-rotate-left"></i> โคมไฟดอกไม้ผ้าใยบัว</div>
+                        <div class="suggestion-item" data-value="ดอกไม้ผ้าใยบัว"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ดอกไม้ผ้าใยบัว</div>
+                        <div class="suggestion-item" data-value="น้ำพริกเห็ด"><i
+                                class="fa-solid fa-clock-rotate-left"></i> น้ำพริกเห็ด</div>
+                        <div class="suggestion-item" data-value="กิ๊กยิ้มกะหรี่พั๊ฟ"><i
+                                class="fa-solid fa-clock-rotate-left"></i> กิ๊กยิ้มกะหรี่พั๊ฟ</div>
+                        <div class="suggestion-item" data-value="น้ำพริกกากหมู"><i
+                                class="fa-solid fa-clock-rotate-left"></i> น้ำพริกกากหมู</div>
+                        <div class="suggestion-item" data-value="น้ำผึ้งแท้"><i
+                                class="fa-solid fa-clock-rotate-left"></i> น้ำผึ้งแท้</div>
+                        <div class="suggestion-item" data-value="น้ำผึ้งดอกไม้ป่า"><i
+                                class="fa-solid fa-clock-rotate-left"></i> น้ำผึ้งดอกไม้ป่า</div>
+                        <div class="suggestion-item" data-value="แยมมะกรูด"><i
+                                class="fa-solid fa-clock-rotate-left"></i> แยมมะกรูด</div>
+                        <div class="suggestion-item" data-value="ทองม้วนงาดำ(รสหวาน)"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ทองม้วนงาดำ(รสหวาน)</div>
+                        <div class="suggestion-item" data-value="ทองม้วนงาดำ(รสเค็ม)"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ทองม้วนงาดำ(รสเค็ม)</div>
+                        <div class="suggestion-item" data-value="ทองม้วนไส้หมูหยอง 2 รสชาติสายชล"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ทองม้วนไส้หมูหยอง 2 รสชาติสายชล</div>
+                        <div class="suggestion-item" data-value="ข้าวกล้องไรซ์เบอร์รี่"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ข้าวกล้องไรซ์เบอร์รี่</div>
+                        <div class="suggestion-item" data-value="ข้าวกล้องหอมมะลิ 105"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ข้าวกล้องหอมมะลิ 105</div>
+                        <div class="suggestion-item" data-value="หมูหยอง"><i class="fa-solid fa-clock-rotate-left"></i>
+                            หมูหยอง</div>
+                        <div class="suggestion-item" data-value="น้ำยาบ้วนปากสมุนไพร"><i
+                                class="fa-solid fa-clock-rotate-left"></i> น้ำยาบ้วนปากสมุนไพร</div>
+                        <div class="suggestion-item" data-value="ที่วางโทรศัพท์ต้นสน"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ที่วางโทรศัพท์ต้นสน</div>
+                        <div class="suggestion-item" data-value="กางเกงเลมัดย้อม"><i
+                                class="fa-solid fa-clock-rotate-left"></i> กางเกงเลมัดย้อม</div>
+                        <div class="suggestion-item" data-value="เสื้อมัดย้อมสีและคราม"><i
+                                class="fa-solid fa-clock-rotate-left"></i> เสื้อมัดย้อมสีและคราม</div>
+                        <div class="suggestion-item" data-value="ผ้าบาติก"><i class="fa-solid fa-clock-rotate-left"></i>
+                            ผ้าบาติก</div>
+                        <div class="suggestion-item" data-value="ผ้าคลุมไหล่มัดย้อม"><i
+                                class="fa-solid fa-clock-rotate-left"></i> ผ้าคลุมไหล่มัดย้อม</div>
+                        <div class="suggestion-item" data-value="พวงกุญแจปลาหมึกถักไหมพรม"><i
+                                class="fa-solid fa-clock-rotate-left"></i> พวงกุญแจปลาหมึกถักไหมพรม</div>
+                        <div class="suggestion-item" data-value="พวงกุญแจกระรอกขาว"><i
+                                class="fa-solid fa-clock-rotate-left"></i> พวงกุญแจกระรอกขาว</div>
+                        <div class="suggestion-item" data-value="หมึกแห้ง"><i class="fa-solid fa-clock-rotate-left"></i>
+                            หมึกแห้ง</div>
+                        <div class="suggestion-item" data-value="หมึกแดดเดียว"><i
+                                class="fa-solid fa-clock-rotate-left"></i> หมึกแดดเดียว</div>
+                    </div>
+                </div>
+    </header>
+
+
+    <!-- ส่วนข้อมูล OTOP แบบแยกสัดส่วน -->
+    <section class="otop-info-wrapper">
+        <div class="container">
+
+            <!-- บล็อกที่ 1: OTOP คืออะไร -->
+            <div class="otop-box about-box">
+                <div class="box-header">
+                    <span class="box-icon"></span>
+                    <h2>OTOP คืออะไร?</h2>
+                </div>
+                <div class="box-body">
+                    <p>
+                        <strong>OTOP (One Tambon One Product)</strong> หรือ <strong>โครงการหนึ่งตำบล
+                            หนึ่งผลิตภัณฑ์</strong>
+                        โครงการหนึ่งตำบลหนึ่งผลิตภัณฑ์ หรือเรียกย่อว่า โอทอป (OTOP)
+                        เป็นโครงการกระตุ้นธุรกิจประกอบการท้องถิ่น
+                        โครงการดังกล่าวมีเป้าหมายจะสนับสนุนผลิตภัณฑ์ลักษณะเฉพาะที่ผลิตและจำหน่ายในท้องถิ่นแต่ละตำบลโดยได้รับแรงบันดาลใจมากจากโครงการหนึ่งหมู่บ้านหนึ่งผลิตภัณฑ์
+                        (OVOP) ที่ประสบความสำเร็จของญี่ปุ่น
+                        โครงการโอทอปกระตุ้นให้ชุมชนหมู่บ้านพัฒนาคุณภาพผลิตภัณฑ์ท้องถิ่นและการตลาด
+                        เลือกผลิตภัณฑ์ที่โดดเด่นมาหนึ่งชิ้นจากแต่ละตำบลมาประทับตราว่า “ผลิตภัณฑ์โอทอป”
+                        และจัดหาเวทีในประเทศและระหว่างประเทศเพื่อประชาสัมพันธ์สินค้าเหล่านี้
+                        ผลิตภัณฑ์โอทอปครอบคลุมผลิตภัณฑ์ท้องถิ่นอย่างกว้างขวาง ซึ่งรวมไปถึงงานหัตถกรรม ฝ้ายและผ้าไหม
+                        เครื่องปั้นดินเผา เครื่องประดับแฟชั่น ของใช้ในครัวเรือนและอาหาร หลังจากรัฐประหารในประเทศไทย พ.ศ.
+                        2549โครงการโอทอปได้ถูกยกเลิกไป ก่อนจะได้รับการฟื้นฟูอีกครั้งแต่เปลี่ยนชื่อใหม่
+                    </p>
+                </div>
+            </div>
+
+            <!-- บล็อกที่ 2: ประเภทของผลิตภัณฑ์ OTOP -->
+            <div class="otop-box types-box">
+                <div class="box-header">
+                    <span class="box-icon"></span>
+                    <h2>ประเภทของผลิตภัณฑ์ OTOP (5 ประเภทหลัก)</h2>
+                </div>
+                <div class="box-body">
+                    <div class="types-grid">
+
+                        <div class="type-item ">
+                            <div class="type-icon"></div>
+                            <div class="type-details">
+                                <p>การจัดประเภทผลิตภัณฑ์ เมื่อปี พ.ศ. 2544 – 2548 จัดกลุ่มประเภทผลิตภัณฑ์ OTOP ออกเป็น
+                                    5 กลุ่ม ดังนี้</p>
+                                <p>1) ประเภทอาหาร
+
+                                    2) ประเภทเครื่องดื่ม
+
+                                    3) ประเภทผ้า เครื่องแต่งกาย
+
+                                    4) ประเภทของใช้/ของตกแต่ง/ของที่ระลึก
+
+                                    5) ประเภทสมุนไพรที่ไม่ใช่อาหาร</p>
+                            </div>
+                        </div>
+
+                        <div class="type-item type-food">
+                            <div class="type-icon"></div>
+                            <div class="type-details">
+                                <h4>1. อาหาร</h4>
+                                <p> หมายถึง ผลผลิตทางการเกษตรและอาหารแปรรูป ซึ่งได้รับมาตรฐาน อย., GAP,GMP, HACCP,
+                                    Qmark, มผช., มอก., มาตรฐานเกษตรอินทรีย์, ฮาลาล และมีบรรจุภัณฑ์ เพื่อการจำหน่ายทั่วไป
+                                    แบ่งเป็น 3 กลุ่ม ดังนี้</p>
+                                <p> 1) ผลิตผลทางการเกษตรที่ใช้บริโภคสด เช่น พืชผัก ผลไม้ เช่น มะม่วง สับปะรด
+                                    ส้มเขียวหวาน มังคุด ส้มโอ กล้วย เป็นต้น กรณีพันธุ์ไม้ เช่น กิ่งพันธุ์มะม่วง
+                                    กิ่งพันธุ์มะปราง ไม้ประดับ ฯลฯ ไม่ถือว่าเป็นผลิตภัณฑ์ที่ลงทะเบียนได้</p>
+                                <p> 2) ผลิตผลทางการเกษตรที่เป็นวัตถุดิบและผ่านกระบวนการแปรรูปเบื้องต้น เช่น นํ้าผึ้ง
+                                    ข้าวสาร ข้าวกล้อง ข้าวฮาง เป็นต้น เนื้อสัตว์แปรรูป เช่น เนื้อโคขุน
+                                    เนื้อนกกระจอกเทศแช่แข็ง หมูแดดเดียว หมูยอ แหนม ไส้อั่ว ไส้กรอก ปลาอบรมควัน หอยจ้อ
+                                    เป็นต้น อาหารประมงแปรรูป เช่น ไส้กรอกปลา ปลาช่อนแดดเดียว ปลาสลิดแดดเดียว ส้มปลาตัว
+                                    น้ำบูดู กะปิ กุ้งแห้ง น้ำปลา ปลาร้า เป็นต้น กรณีสัตว์ที่มีชีวิต เช่น ไก่ชน ปลากัด
+                                    ไม่ถือว่าเป็นผลิตภัณฑ์ที่ลงทะเบียนได้ เพราะไม่ผ่านกระบวนการแปรรูปเบื้องต้น</p>
+                                <p> 3) อาหารแปรรูปกึ่งสำเร็จรูป/สำเร็จรูป เช่น ขนมเค้ก เฉาก๊วย ขนมโมจิ เต้าส้อ กระยาสารท
+                                    กล้วยฉาบ กล้วยอบ มะขามปรุงรส ทุเรียนทอด กาละแม กะหรี่ปั๊บ ขนมทองม้วน ข้าวเกรียบ
+                                    ข้าวแต๋น น้ำพริกเผาและน้ำพริกต่างๆ แจ่วบอง น้ำจิ้มสุกี้ น้ำปลาหวาน ผักกาดดอง พริกไทย
+                                    แคบหมู ไข่เค็ม กุนเชียง หมูทุบ หมูแผ่น เป็นต้น</p>
+                                <p> 3) อาหารแปรรูปกึ่งสำเร็จรูป/สำเร็จรูป เช่น ขนมเค้ก เฉาก๊วย ขนมโมจิ เต้าส้อ กระยาสารท
+                                    กล้วยฉาบ กล้วยอบ มะขามปรุงรส ทุเรียนทอด กาละแม กะหรี่ปั๊บ ขนมทองม้วน ข้าวเกรียบ
+                                    ข้าวแต๋น น้ำพริกเผาและน้ำพริกต่างๆ แจ่วบอง น้ำจิ้มสุกี้ น้ำปลาหวาน ผักกาดดอง พริกไทย
+                                    แคบหมู ไข่เค็ม กุนเชียง หมูทุบ หมูแผ่น เป็นต้น</p>
+                                <p> – อาหารสำเร็จรูป หมายถึง อาหารที่ผ่านขั้นตอนการหุงต้ม หรือกระบวนการ
+                                    แปรรูปผลิตผลการเกษตร โดยใช้เทคโนโลยีเพื่อให้อาหารนั้นสามารถเก็บได้เป็นเวลานานพอสมควร
+                                    โดยไม่เน่าเสีย และสามารถรับประทานได้ทันทีเมื่อต้องการ เช่น หมูแผ่น หมูหยอง
+                                    น้ำพริกเผา น้ำจิ้มไก่ ซอสพริก น้ำจิ้มปลาซาบะ ปลาหมึก ปลาอบกรอบ ขนมอบกรอบ น้ำกะทิ
+                                    ข้าวสุกบรรจุกระป๋อง ปลากระป๋อง</p>
+                                <p>– อาหารกึ่งสำเร็จรูป ตามประกาศกระทรวงสาธารณสุข ฉบับที่ ๒๑๐ พ.ศ. ๒๕๔๓
+                                    กำหนดให้อาหารกึ่งสำเร็จรูป หมายถึง อาหารที่ผ่านกรรมวิธีและปรุงแต่งมาบ้างแล้ว
+                                    เพียงแค่ผ่านกรรมวิธีอย่างง่ายๆ ใช้ระยะเวลาสั้นๆ เช่น โดยการเติมน้ำร้อน
+                                    หรือการต้มเพียงไม่กี่นาที ก็สามารถนำมารับประทานได้แล้ว
+                                    อาหารกึ่งสำเร็จรูปสามารถแบ่งออกได้ ๔ ชนิด ดังนี้</p>
+                                <p> ก๋วยเตี๋ยว ก๊วยจั๊บ บะหมี่ เส้นหมี่ และวุ้นเส้นที่ปรุงแต่ง
+                                    ข้าวต้มและโจ๊กที่ปรุงแต่ง
+                                    แกงจืดและซุปชนิดเข้มข้น ชนิดก้อน ชนิดผง หรือ ชนิดแห้ง
+                                    แกง และ น้ำพริกแกงต่างๆ</p>
+                            </div>
+                        </div>
+
+                        <div class="type-item type-drink">
+                            <div class="type-icon"></div>
+                            <div class="type-details">
+                                <h4>2. เครื่องดื่ม</h4>
+                                <p>หมายถึง ผลิตภัณฑ์ประเภทเครื่องดื่มที่มีแอลกอฮอล์ ได้แก่ สุราแช่ สุรากลั่น สาโท อุ
+                                    ไวน์ เหล้าขาว ๓๕-๔๐ ดีกรี เป็นต้น และเครื่องดื่มที่ไม่มีแอลกอฮอล์ ได้แก่
+                                    ผลิตภัณฑ์เครื่องดื่มประเภทพร้อมดื่ม ผลิตภัณฑ์ประเภทชงละลาย และผลิตภัณฑ์ประเภทชง เช่น
+                                    น้ำผลไม้ น้ำสมุนไพร เครื่องดื่มรังนก กาแฟคั่ว กาแฟปรุงสำเร็จ ขิงผงสำเร็จรูป มะตูมผง
+                                    ชาใบหม่อน ชาจีน ชาสมุนไพร ชาชัก น้ำเฉาก๊วย น้ำเต้าหู้นมสดนมข้าวกล้อง เป็นต้น</p>
+                            </div>
+                        </div>
+
+                        <div class="type-item type-cloth">
+                            <div class="type-icon"></div>
+                            <div class="type-details">
+                                <h4>3. ผ้าและเครื่องแต่งกาย</h4>
+                                <p>หมายถึง ผ้าทอและผ้าถักจากเส้นใยธรรมชาติหรือเส้นใยสังเคราะห์
+                                    รวมทั้งเสื้อผ้า/เครื่องนุ่งห่ม และเครื่องแต่งกายที่ใช้ประดับตกแต่งประกอบการแต่งกาย
+                                    ทั้งเพื่อประโยชน์ในการใช้สอยและเพื่อความสวยงาม โดยจำแนกเป็น ๒ ลักษณะ คือ</p>
+                                <p> 1) ผ้า หมายถึง ผลิตภัณฑ์ผ้าผืนที่ทำจากเส้นใย เส้นด้าย
+                                    นำมาทอถักเป็นผืนมีลวดลายเกิดจากโครงสร้างการทอหรือตกแต่งสำเร็จบนผืนผ้า ทำด้วยมือ
+                                    หรือเครื่องจักร
+                                    รวมถึงผลิตภัณฑ์เสื้อผ้าและเครื่องนุ่งห่มซึ่งเป็นเส้นใยธรรมชาติและเส้นใยสังเคราะห์
+                                    สิ่งทอ และผลิตภัณฑ์ที่ทำจากผ้าเป็นหลักและมีวัสดุอื่นๆ เป็นองค์ประกอบผสม เช่น ผ้าไหม
+                                    ผ้าฝ้าย ผ้าโสร่ง ผ้าขาวม้า ผ้าคลุมไหล่ ผ้าบาติก ผ้าถุง ผ้าปักชาวเขา ผ้าคลุมผม
+                                    หมวกกะปิเยาะ ผ้าพันคอ เสื้อผ้า สำเร็จรูปบุรุษ – สตรี เป็นต้น</p>
+                                <p>2) เครื่องแต่งกาย หมายถึง ผลิตภัณฑ์ที่ใช้ประดับตกแต่งประกอบการแต่งกาย
+                                    ที่ทำจากวัสดุทุกประเภทเพื่อประโยชน์ในการใช้สอย เช่น รองเท้า เข็มขัด กระเป๋าถือ
+                                    เป็นต้น และเพื่อความสวยงาม เช่น สร้อย แหวน ต่างหู เข็มกลัด กำไล นาฬิกาข้อมือ เนกไท
+                                    หมวกแฟชั่น เป็นต้น</p>
+                            </div>
+                        </div>
+
+                        <div class="type-item type-decor">
+                            <div class="type-icon"></div>
+                            <div class="type-details">
+                                <h4>4. ของใช้ ของตกแต่ง ของที่ระลึก</h4>
+                                <p>หมายถึง ผลิตภัณฑ์ที่มีไว้ใช้หรือตกแต่งประดับ ในบ้าน สถานที่ต่างๆ เช่น
+                                    เครื่องใช้ในบ้าน เครื่องครัว เครื่องเรือน ที่มีวัตถุประสงค์เพื่อการใช้สอย
+                                    หรือประดับตกแต่ง หรือให้เป็นของขวัญ เพื่อให้ผู้รับนำไปใช้สอยในบ้าน ตกแต่งบ้าน
+                                    รวมทั้งสิ่งประดิษฐ์ที่สะท้อนถึงวิถีชีวิตภูมิปัญญา และวัฒนธรรมท้องถิ่น
+                                    และสินค้านั้นต้องไม่ผลิตโดยใช้เครื่องจักรเป็นหลักหรือใช้แรงคนเป็นส่วนเสริมหรือไม่ใช้แรงงานคน
+                                    ประเภทของใช้/ของตกแต่ง/ของที่ระลึก แบ่งออกเป็น ๗ กลุ่ม</p>
+                                <p> 1) ไม้ หมายถึง ของใช้/ของตกแต่ง/ของที่ระลึก ที่มีวัสดุที่ทำจากไม้เป็นหลัก เช่น
+                                    ไม้แกะสลัก เฟอร์นิเจอร์ กล่องไม้ นาฬิกาไม้ตั้งโต๊ะ โคมไฟกะลามะพร้าว ของเล่นเด็ก
+                                    เครื่องดนตรี ตู้พระธรรม เรือจำลอง แจกันไม้ กรงนก ไม้แขวนเสื้อ เป็นต้น</p>
+                                <p> 2) จักสาน ถักสาน หมายถึง ของใช้/ของตกแต่ง/ของที่ระลึก
+                                    ที่มีวัสดุที่เป็นเส้นใยธรรมชาติ หรือวัสดุสังเคราะห์ใดๆ เช่น พลาสติก นำมาจักสาน
+                                    หรือถักสาน ถักทอ เป็นรูปร่าง เช่น ตะกร้า กระจูดสาน เสื่อกก ที่รองจานทำจากเสื่อกก
+                                    ที่ใส่ของทำจากพลาสติกสาน กระจาด กระบุง กระด้ง กระติบข้าว เชือกมัด เปลยวน
+                                    โคมไฟผักตบชวา ไม้กวาด กระเช้าเถาวัลย์ พรมเช็ดเท้า ฝาชี หมวกสานไม้ไผ่ เป็นต้น</p>
+                                <p> 3) ดอกไม้ประดิษฐ์/วัสดุจากเส้นใยธรรมชาติ หมายถึง ดอกไม้ ต้นไม้ กล้วยไม้ ผลไม้
+                                    ที่ไม่ใช่สิ่งมีชีวิตตามธรรมชาติ แต่ทำจากวัสดุต่างๆ เพื่อเลียนแบบธรรมชาติ
+                                    หรือ/และผลิตภัณฑ์ประเภทของใช้/ของตกแต่ง/ของที่ระลึก
+                                    ที่มีวัสดุที่ทำจากกระดาษสาเป็นหลัก เช่น ถุงกระดาษ กล่องกระดาษสา ต้นไม้ประดิษฐ์
+                                    ผลไม้ประดิษฐ์ เป็นต้น</p>
+                                <p>4) โลหะ หมายถึง ผลิตภัณฑ์ประเภทของใช้/ของตกแต่ง/ของที่ระลึกที่ทำจากโลหะต่างๆ เช่น
+                                    เงิน ทองเหลือง ดีบุก แสตนเลศ ทอง สังกะสี เป็นต้น เป็นส่วนประกอบหลัก เช่น ช้อนส้อม
+                                    มีด ผลิตภัณฑ์ภาชนะที่ใช้โลหะ ภาชนะที่ทำจากแสตนเลสทุบ ทองเหลืองทุบ พิวเตอร์ บรอนซ์
+                                    แกะสลักที่ใช้ตกแต่งสถานที่ต่างๆ เป็นต้น</p>
+                                <p> 5) เซรามิค/เครื่องปั้นดินเผา หมายถึง ผลิตภัณฑ์ที่มีการนำวัสดุประเภทดิน สินแร่
+                                    ไปขึ้นรูปและนำไปเผาด้วยความร้อนสูง เพื่อเป็นภาชนะ ของใช้ ของตกแต่ง ของที่ระลึก เช่น
+                                    เบญจรงค์ ถ้วยชาม ภาชนะกระเบื้อง เซรามิค โอ่ง อ่าง กระถางต่างๆ เป็นต้น</p>
+                                <p> 6) เคหะสิ่งทอ หมายถึง ของใช้/ของตกแต่ง/ของที่ระลึก ที่มีวัสดุทำจากผ้า มีการตัดเย็บ
+                                    เช่น ชุดเครื่องนอน พรมเช็ดเท้า ผ้าปูโต๊ะ ถุงมือถักสำหรับทำการเกษตร เป็นต้น</p>
+                                <p> อื่นๆ ของใช้/ของตกแต่ง/ของที่ระลึก หรือผลิตภัณฑ์อื่นๆ ที่ใช้วัสดุอื่นใดนอกเหนือจาก
+                                    ข้อ ๑-๖ เช่น ทำจากพลาสติก เรซิน แก้ว เทียน รูปวาด เปเปอร์มาเช่ กระจก ซีเมนต์
+                                    ต้นไม้มงคล ตุ๊กตาจากดินไทย ผลไม้เผาดูดกลิ่น พระพุทธรูป เป็นต้น</p>
+                            </div>
+                        </div>
+                        <div class="type-item type-herb">
+                            <div class="type-icon"></div>
+                            <div class="type-details">
+                                <h4>5. สมุนไพรที่ไม่ใช่อาหาร</h4>
+                                <p> หมายถึง ผลิตภัณฑ์จากสมุนไพร หรือมีสมุนไพร
+                                    เป็นส่วนประกอบอาจใช้ประโยชน์และอาจส่งผลต่อสุขภาพ ได้แก่ ยาจากสมุนไพร
+                                    เครื่องสำอางสมุนไพร วัตถุอันตรายที่ใช้ในบ้านเรือนเช่น น้ำยาล้างจานสมุนไพร
+                                    สมุนไพรไล่ยุงหรือกำจัดแมลง และรวมถึงผลิตภัณฑ์จากสมุนไพรที่ใช้ทางการเกษตร เช่น
+                                    น้ำหมักชีวภาพ น้ำส้มควันไม้ เป็นต้น แบ่งเป็น ๓ กลุ่ม</p>
+                                <p> 1) ยาจากสมุนไพร
+
+                                    2) เครื่องสำอางสมุนไพร
+
+                                    3) วัตถุอันตรายที่ใช้ในบ้านเรือน</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+    </section>
+
+
+    <main class="container">
+        <!-- 3. Category Section -->
+        <div class="section-header-title">
+            <h3 class="section-title">หมวดหมู่ผลิตภัณฑ์ OTOP</h3>
+        </div>
+
+        <div class="category-grid">
+            <a href="product.html?category=food" class="category-card">
+                <div class="category-icon-wrapper"><i class="fa-solid fa-utensils"></i></div>
+                <span>อาหาร</span>
+            </a>
+            <a href="product.html?category=drink" class="category-card">
+                <div class="category-icon-wrapper"><i class="fa-solid fa-mug-hot"></i></div>
+                <span>เครื่องดื่ม</span>
+            </a>
+            <a href="product.html?category=cloth" class="category-card">
+                <div class="category-icon-wrapper"><i class="fa-solid fa-shirt"></i></div>
+                <span>ผ้าและเครื่องแต่งกาย</span>
+            </a>
+            <a href="product.html?category=decor" class="category-card">
+                <div class="category-icon-wrapper"><i class="fa-solid fa-gem"></i></div>
+                <span>ของใช้ ของตกแต่ง</span>
+            </a>
+            <a href="product.html?category=herb" class="category-card">
+                <div class="category-icon-wrapper"><i class="fa-solid fa-leaf"></i></div>
+                <span>สมุนไพรที่ไม่ใช่อาหาร</span>
+            </a>
+            <a href="product.html" class="category-card">
+                <div class="category-icon-wrapper"><i class="fa-solid fa-border-all"></i></div>
+                <span>หมวดหมู่ทั้งหมด</span>
+            </a>
+        </div>
+
+        <!-- 4. Recommended Products -->
+        <div class="section-header">
+            <h3 class="section-title" style="margin: 0;">ผลิตภัณฑ์แนะนำประจำจังหวัด</h3>
+            <a href="product.html" class="view-all">ดูทั้งหมด <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="product-grid">
+            <!-- Product Item 1 -->
+            <a href="product-detail.html" class="product-card">
+                <div class="product-img-wrapper">
+                    <span class="product-badge">อาหาร</span>
+                    <img class="product-img" src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=300"
+                        alt="ทองม้วนกรอบ">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">ทองม้วนกรอบแก้ว OTOP</div>
+                    <div class="product-location"><i class="fa-solid fa-location-dot"></i> อ.เมืองชลบุรี</div>
+                </div>
+            </a>
+
+            <!-- Product Item 2 -->
+            <a href="product-detail.html" class="product-card">
+                <div class="product-img-wrapper">
+                    <span class="product-badge">ผ้าและเครื่องแต่งกาย</span>
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=300" alt="ผ้าทอมือ">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">ผ้าทอมือบ้านบางละมุง</div>
+                    <div class="product-location"><i class="fa-solid fa-location-dot"></i> อ.บางละมุง</div>
+                </div>
+            </a>
+
+            <!-- Product Item 3 -->
+            <a href="product-detail.html" class="product-card">
+                <div class="product-img-wrapper">
+                    <span class="product-badge">ของใช้</span>
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=300" alt="กระเป๋าสาน">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">กระเป๋าจักสานเส้นพลาสติก</div>
+                    <div class="product-location"><i class="fa-solid fa-location-dot"></i> อ.พนัสนิคม</div>
+                </div>
+            </a>
+
+            <!-- Product Item 4 -->
+            <a href="product-detail.html" class="product-card">
+                <div class="product-img-wrapper">
+                    <span class="product-badge">เครื่องดื่ม</span>
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1622484210800-88510392e21a?q=80&w=300" alt="น้ำตาลสด">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">น้ำตาลสดแท้ 100%</div>
+                    <div class="product-location"><i class="fa-solid fa-location-dot"></i> อ.บ้านบึง</div>
+                </div>
+            </a>
+
+            <!-- Product Item 5 -->
+            <a href="product-detail.html" class="product-card">
+                <div class="product-img-wrapper">
+                    <span class="product-badge">สมุนไพร</span>
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1607006344380-b6775a0824a7?q=80&w=300" alt="สบู่สมุนไพร">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">สบู่สมุนไพรเปลือกมังคุด</div>
+                    <div class="product-location"><i class="fa-solid fa-location-dot"></i> อ.บ้านบึง</div>
+                </div>
+            </a>
+
+            <!-- Product Item 6 -->
+            <a href="product-detail.html" class="product-card">
+                <div class="product-img-wrapper">
+                    <span class="product-badge">อาหาร</span>
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1528751014936-863e6e7a319c?q=80&w=300" alt="กล้วยฉาบ">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">กล้วยฉาบอบเนยบางแสน</div>
+                    <div class="product-location"><i class="fa-solid fa-location-dot"></i> อ.บางละมุง</div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+
+
+    <!-- 5. Footer -->
+    <footer>
+        © สำนักงานพัฒนาชุมชนจังหวัดชลบุรี - ระบบสารสนเทศผลิตภัณฑ์ OTOP
+    </footer>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsBox = document.getElementById('suggestionsBox');
+        const searchForm = document.getElementById('searchForm');
+
+        let searchTimeout;
+
+        // เมื่อคลิกช่องค้นหา
+        searchInput.addEventListener('focus', () => {
+            suggestionsBox.classList.add('active');
+        });
+
+        // ค้นหาคำแนะนำขณะพิมพ์
+        searchInput.addEventListener('input', () => {
+
+            clearTimeout(searchTimeout);
+
+            searchTimeout = setTimeout(() => {
+
+                const query = searchInput.value.toLowerCase().trim();
+                const items = suggestionsBox.querySelectorAll('.suggestion-item');
+
+                let hasVisible = false;
+
+                // ถ้าไม่ได้พิมพ์อะไร
+                if (query === '') {
+                    suggestionsBox.classList.remove('active');
+
+                    items.forEach(item => {
+                        item.style.display = 'flex';
+                    });
+
+                    return;
+                }
+
+                // ตรวจสอบคำค้นหา
+                items.forEach(item => {
+
+                    const text = item.textContent.toLowerCase();
+
+                    if (text.includes(query)) {
+                        item.style.display = 'flex';
+                        hasVisible = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+
+                });
+
+                // แสดง/ซ่อนกล่องคำแนะนำ
+                if (hasVisible) {
+                    suggestionsBox.classList.add('active');
+                } else {
+                    suggestionsBox.classList.remove('active');
+                }
+
+            }, 250);
+        });
+
+
+        // เมื่อเลือกคำแนะนำ
+        document.querySelectorAll('.suggestion-item').forEach(item => {
+
+            item.addEventListener('click', () => {
+
+                searchInput.value = item.getAttribute('data-value');
+
+                suggestionsBox.classList.remove('active');
+
+                // ส่งไปหน้า product.html
+                searchForm.submit();
+
+            });
+
+        });
+
+
+        // คลิกข้างนอกให้ปิดคำแนะนำ
+        document.addEventListener('click', (e) => {
+
+            if (!e.target.closest('.search-container')) {
+                suggestionsBox.classList.remove('active');
+            }
+
+        });
+    </script>

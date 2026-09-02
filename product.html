@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTOP CHONBURI - ค้นหาผลิตภัณฑ์</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-blue: #0b2545;
+      --accent-blue: #134074;
+      --light-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-dark: #1d2d44;
+      --text-muted: #6c757d;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+
+    .brand-logo a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .brand-title h2 {
+      font-size: 1.05rem;
+      color: var(--primary-blue);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .brand-title p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: 0.82rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a i {
+      font-size: 1.1rem;
+      color: #4a5568;
+    }
+
+    .nav-links a.active, .nav-links a:hover {
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .nav-links a.active i, .nav-links a:hover i {
+      color: var(--primary-blue);
+    }
+
+    /* --- MAIN CONTENT LAYOUT --- */
+    .main-container {
+      max-width: 1200px;
+      margin: 25px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 25px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* --- SIDEBAR FILTERS --- */
+    .filter-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      height: fit-content;
+    }
+
+    .filter-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .filter-group {
+      margin-bottom: 20px;
+    }
+
+    .filter-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+
+    .filter-control {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      outline: none;
+      background: white;
+    }
+
+    .filter-control:focus {
+      border-color: var(--primary-blue);
+    }
+
+    .btn-reset {
+      width: 100%;
+      background: #f1f5f9;
+      color: var(--text-dark);
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-reset:hover {
+      background: #e2e8f0;
+    }
+
+    /* --- PRODUCT CONTENT AREA --- */
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .result-count {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .result-count span {
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
+
+    /* --- PRODUCT GRID & CARDS --- */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    }
+
+    .product-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 150px;
+      background: #f1f5f9;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 0.7rem;
+      background: rgba(11, 37, 69, 0.85);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+    }
+
+    .product-info {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-seller {
+      font-size: 0.78rem;
+      color: var(--accent-blue);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .product-location {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: var(--primary-blue);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.8rem;
+      font-weight: 300;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Navbar -->
+  <nav class="navbar">
+    <div class="brand-logo">
+      <a href="index.html">
+        <img src="assets/img/logo chon.png" alt="ตราจังหวัด" onerror="this.src='https://via.placeholder.com/40'">
+        <img class="logo-cdd" src="assets/img/กรมการพัฒนาชุมชน-Photoroom.png" alt="กรมการพัฒนาชุมชน" onerror="this.src='https://via.placeholder.com/40'">
+        <img src="assets/img/otoplogo.gif" alt="OTOP" onerror="this.src='https://via.placeholder.com/40'">
+        <div class="brand-title">
+          <h2>OTOP CHONBURI</h2>
+          <p>ระบบสารสนเทศผลิตภัณฑ์ OTOP จังหวัดชลบุรี</p>
+        </div>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html"><i class="fa-solid fa-house"></i><span>หน้าแรก</span></a></li>
+      <li><a href="product.html" class="active"><i class="fa-solid fa-magnifying-glass"></i><span>ค้นหาผลิตภัณฑ์</span></a></li>
+      <li><a href="product-detail.html"><i class="fa-solid fa-file-lines"></i><span>รายละเอียดผลิตภัณฑ์</span></a></li>
+      <li><a href="contact.html"><i class="fa-solid fa-phone"></i><span>ติดต่อเรา</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- 2. Main Content Container -->
+  <main class="main-container">
+
+    <!-- SIDEBAR: Filter -->
+    <aside class="filter-card">
+      <div class="filter-header">
+        <i class="fa-solid fa-filter"></i> ตัวกรองค้นหา
+      </div>
+
+      <div class="filter-group">
+        <label for="searchInput">คำค้นหา</label>
+        <input type="text" id="searchInput" class="filter-control" placeholder="พิมพ์ชื่อสินค้า...">
+      </div>
+
+      <div class="filter-group">
+        <label for="districtSelect">อำเภอ</label>
+        <select id="districtSelect" class="filter-control">
+          <option value="all">ทั้งหมด</option>
+          <option value="เมืองชลบุรี">เมืองชลบุรี</option>
+          <option value="ศรีราชา">ศรีราชา</option>
+          <option value="บางละมุง">บางละมุง</option>
+          <option value="สัตหีบ">สัตหีบ</option>
+          <option value="พนัสนิคม">พนัสนิคม</option>
+          <option value="บ้านบึง">บ้านบึง</option>
+          <option value="หนองใหญ่">หนองใหญ่</option>
+          <option value="เกาะจันทร์">เกาะจันทร์</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="categorySelect">ประเภทผลิตภัณฑ์</label>
+        <select id="categorySelect" class="filter-control">
+          <option value="all">ทั้งหมด</option>
+          <option value="food">อาหาร</option>
+          <option value="drink">เครื่องดื่ม</option>
+          <option value="cloth">ผ้าและเครื่องแต่งกาย</option>
+          <option value="decor">ของใช้/ของตกแต่ง</option>
+          <option value="herb">สมุนไพรที่ไม่ใช่อาหาร</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn-reset" onclick="resetFilters()">
+        <i class="fa-solid fa-rotate-left"></i> ล้างตัวกรอง
+      </button>
+    </aside>
+
+    <!-- RIGHT CONTENT: Product List -->
+    <section>
+      <div class="content-header">
+        <div class="result-count">
+          ผลการค้นหาพบ <span id="productCount">0</span> รายการ
+        </div>
+      </div>
+
+      <!-- Grid แสดงการ์ดสินค้า (JS จะดึงมาวางที่นี่) -->
+      <div id="productGrid" class="product-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- 3. Footer -->
+  <footer>
+    © สำนักงานพัฒนาชุมชนจังหวัดชลบุรี
+  </footer>
+
+ <script>
+// คลังข้อมูลสินค้า 34 รายการ
+const otopProducts = [
+    { id: 1, name: "คุกกี้ไรซ์เบอร์รี่ธัญพืช", category: "food", district: "สัตหีบ", seller: "P&P Bakery", description: "ราคา 65 บาท", phone: "0892341399", img: "assets/img/cookie.jpg" },
+    { id: 2, name: "กล้วยม้วนกรอบ", category: "food", district: "หนองใหญ่", seller: "ป้าสุรีย์", description: "ราคา 20 บาท", phone: "0896089199", img: "assets/img/tongmuan.jpg" },
+    { id: 3, name: "น้ำปลาตราปลาคู่", category: "food", district: "ศรีราชา", seller: "น้ำปลาตราปลาคู่", description: "ราคาขวดละ 28-49 บาท", phone: "0988782263", img: "assets/img/default.jpg" },
+    { id: 4, name: "พุดดิ้งมะพร้าวอ่อน", category: "food", district: "บ้านบึง", seller: "Lamoon", description: "ราคา 35 บาท", phone: "0865800226", img: "assets/img/default.jpg" },
+    { id: 5, name: "ขนมงาพอง (งาดำ)", category: "food", district: "พนัสนิคม", seller: "ตั้งเซ่งเฮง", description: "ราคา 45 บาท", phone: "0932651595", img: "assets/img/default.jpg" },
+    { id: 6, name: "ขนมจีบปู", category: "food", district: "บางละมุง", seller: "เปาเหล่ากง", description: "ราคา 10 บาท", phone: "0898334378", img: "assets/img/default.jpg" },
+    { id: 7, name: "ข้าวซ้อมมือ", category: "food", district: "บ้านบึง", seller: "ชลทิพย์", description: "ราคา 60 บาท", phone: "0956921693", img: "assets/img/default.jpg" },
+    { id: 8, name: "ข้าวแต๋นน้ำแตงโม", category: "food", district: "เมืองชลบุรี", seller: "หอมหวาน", description: "ราคา 35/50 บาท", phone: "0894002654", img: "assets/img/default.jpg" },
+    { id: 9, name: "คุกกี้ไรซ์เบอร์รี่ธัญพืช", category: "food", district: "เมืองชลบุรี", seller: "เติมสุข", description: "ราคา 65 บาท", phone: "0846495621", img: "assets/img/default.jpg" },
+    { id: 10, name: "แคบหมูไร้มัน", category: "food", district: "หนองใหญ่", seller: "แม่สอางค์ทิพย์", description: "ราคา 100 บาท", phone: "0867078861", img: "assets/img/default.jpg" },
+    { id: 11, name: "แฮ่กึ๊นกุ้ง", category: "food", district: "เมืองชลบุรี", seller: "จรินทร์หนองมน", description: "ราคา 130 บาท", phone: "0825426546", img: "assets/img/แฮ่กึ๊นกุ้ง.jpg" },
+    { id: 12, name: "มะม่วงกวนอบแห้ง", category: "food", district: "เกาะจันทร์", seller: "แม่ซู้กิม", description: "ราคา 13 บาท", phone: "0814907535", img: "assets/img/default.jpg" },
+    { id: 13, name: "มะม่วงแช่อิ่ม", category: "food", district: "เกาะจันทร์", seller: "แม่ซู้กิม", description: "ราคา 20-40 บาท", phone: "0814907535", img: "assets/img/default.jpg" },
+    { id: 14, name: "กะปิหวาน", category: "food", district: "ศรีราชา", seller: "ป้าบัติ", description: "ราคา 40 บาท", phone: "0802199462", img: "assets/img/default.jpg" },
+    { id: 15, name: "ทองม้วนงาดำ(รสเค็ม)", category: "food", district: "เกาะจันทร์", seller: "มณีจันทร์", description: "ราคา 50 บาท", phone: "0876055551", img: "assets/img/default.jpg" },
+    { id: 16, name: "หมูแผ่น", category: "food", district: "บ้านบึง", seller: "ร้านสายชล", description: "ราคา 120 บาท", phone: "0812543431", img: "assets/img/default.jpg" },
+    { id: 17, name: "หมูสะเต๊ะพร้อมทาน", category: "food", district: "บ้านบึง", seller: "Aaron Loeb", description: "ราคา 89 บาท", phone: "0815769968", img: "assets/img/default.jpg" },
+    { id: 18, name: "น้ำพริกปลาเผาเดิม", category: "food", district: "ศรีราชา", seller: "ป้าบัติ", description: "ราคา 50 บาท", phone: "0802199462", img: "assets/img/default.jpg" },
+    { id: 19, name: "ขนมดอกจอก", category: "food", district: "เมืองชลบุรี", seller: "ขนมดอกจอกหอมหวาน", description: "ราคา 25 บาท", phone: "0894002654", img: "assets/img/default.jpg" },
+    { id: 20, name: "กุนเชียงหมู", category: "food", district: "ศรีราชา", seller: "เจ๊ลิ กุนเชียงมีสุข", description: "", phone: "0816383015", img: "assets/img/default.jpg" },
+    { id: 21, name: "น้ำพริก", category: "food", district: "เกาะจันทร์", seller: "บ้านหนองชุมเห็ด", description: "ราคา 30 บาท", phone: "0850954885", img: "assets/img/default.jpg" },
+    { id: 22, name: "น้ำพริกแกงส้ม", category: "food", district: "เกาะจันทร์", seller: "บ้านหนองชุมเห็ด", description: "", phone: "0850954885", img: "assets/img/default.jpg" },
+    { id: 23, name: "น้ำพริกแกงเผ็ด", category: "food", district: "เกาะจันทร์", seller: "บ้านหนองชุมเห็ด", description: "ราคา 60 บาท", phone: "0850954885", img: "assets/img/default.jpg" },
+    { id: 24, name: "จระเข้หยอง", category: "food", district: "เมืองชลบุรี", seller: "แสงตะวัน", description: "ราคา 380 บาท", phone: "0818638837", img: "assets/img/default.jpg" },
+    { id: 25, name: "กล้วยกรอบเนยสด", category: "food", district: "พนัสนิคม", seller: "Banana Ann บานาน่า แอน", description: "ราคา 60 บาท", phone: "0959193269", img: "assets/img/default.jpg" },
+    { id: 26, name: "ไข่เค็ม", category: "food", district: "ศรีราชา", seller: "กลุ่มแม่บ้าน หมู่ 4", description: "", phone: "0816522295", img: "assets/img/default.jpg" },
+    { id: 27, name: "หมี่กรอบ", category: "food", district: "บางละมุง", seller: "แจ๋วแหว๋วหมี่กรอบ", description: "ราคา 25 บาท", phone: "0824569364", img: "assets/img/default.jpg" },
+    { id: 28, name: "ทองม้วน", category: "food", district: "บางละมุง", seller: "ทองม้วนบ้านเก๋", description: "ราคา 25 บาท", phone: "0868204322", img: "assets/img/default.jpg" },
+    { id: 29, name: "ทองพับ", category: "food", district: "บางละมุง", seller: "ทองม้วนบ้านเก๋", description: "ราคา 25 บาท", phone: "0868204322", img: "assets/img/default.jpg" },
+    { id: 30, name: "ซาลาเปาไส้หมูสับ", category: "food", district: "บางละมุง", seller: "เปาเหล่ากง", description: "ราคา 22 บาท", phone: "0898334378", img: "assets/img/default.jpg" },
+    { id: 31, name: "พุดดิ้งรัน", category: "food", district: "เมืองชลบุรี", seller: "PUDDINGRUN", description: "ราคา 25/35 บาท", phone: "084389935", img: "assets/img/default.jpg" },
+    { id: 32, name: "กะหรี่ปั๊บงาดำ", category: "food", district: "สัตหีบ", seller: "คุณอรกะหรี่ปั๊บงาดำ", description: "ราคา 4 ชิ้น 50 บาท", phone: "081340751", img: "assets/img/default.jpg" },
+    { id: 33, name: "น้ำพริกปลาร้า", category: "food", district: "พนัสนิคม", seller: "น้ำพริกย่าตุ๊กตา", description: "ราคา 20-50 บาท", phone: "0641847663", img: "assets/img/default.jpg" },
+    { id: 34, name: "ซอสพริกศรีราชา", category: "food", district: "ศรีราชา", seller: "แม่เสนาะ", description: "ราคา 35 บาท", phone: "0881846913", img: "assets/img/default.jpg" },
+    { id: 35, name: "เสื้อสุภาพบุรุษแขนยาวลายดอก", category: "cloth", district: "เมืองชลบุรี", seller: "กฤษณี", description: "ราคา 750 บาท", phone: "0959545742", img: "assets/img/default.jpg" },
+    { id: 36, name: "กระเป๋าผ้า", category: "cloth", district: "สัตหีบ", seller: "Jintanavy", description: "ราคา 100/150/250 บาท", phone: "0813052229", img: "assets/img/กระเป๋าผ้า Jintanavy.jpg" },
+    { id: 37, name: "กระเป๋าผ้าลดโลกร้อน", category: "cloth", district: "สัตหีบ", seller: "PETCHA", description: "ราคา 380 บาท", phone: "0956929461", img: "assets/img/default.jpg" },
+    { id: 38, name: "รองเท้าใส่ในบ้าน", category: "cloth", district: "ศรีราชา", seller: "Eco slippers", description: "ราคา 120 บาท", phone: "0621542665", img: "assets/img/default.jpg" },
+    { id: 39, name: "กระเป๋าจระเข้", category: "cloth", district: "ศรีราชา", seller: "PAWIN LEATHER", description: "ราคา 14,500 บาท", phone: "0615362959", img: "assets/img/default.jpg" },
+    { id: 40, name: "กระเป๋าผ้าก้นมน", category: "cloth", district: "สัตหีบ", seller: "PETCHA", description: "ราคา 1,750 บาท", phone: "0956929461", img: "assets/img/default.jpg" },
+    { id: 41, name: "กระเป๋าลายดอกพิกุลสันไข่", category: "cloth", district: "พนัสนิคม", seller: "ศูนย์ส่งเสริมฝีมือการจักสานด้วยไม้ไผ่", description: "ราคา 13,000 บาท", phone: "038461313", img: "assets/img/default.jpg" },
+    { id: 42, name: "กระเป๋าถือ", category: "cloth", district: "พนัสนิคม", seller: "ทรัพย์ไผ่งาม", description: "ราคา 9,500 บาท", phone: "0897691825", img: "assets/img/default.jpg" },
+    { id: 43, name: "กระเป๋าลายดอกพิกุลอัดขอบหูเดียว", category: "cloth", district: "พนัสนิคม", seller: "ศูนย์ส่งเสริมฝีมือการจักสานด้วยไม้ไผ่", description: "ราคา 7,900 บาท", phone: "038461313", img: "assets/img/default.jpg" },
+    { id: 44, name: "หมวกถัก", category: "cloth", district: "บางละมุง", seller: "Chalee hand 2 make", description: "ราคา 350 บาท", phone: "0869575819", img: "assets/img/default.jpg" },
+    { id: 45, name: "ผ้าคลุมไหล่", category: "cloth", district: "พนัสนิคม", seller: "Bann Chang design", description: "ราคา 950-1,250 บาท", phone: "0818658682", img: "assets/img/default.jpg" },
+    { id: 46, name: "หมอนยางพารา", category: "cloth", district: "บ่อทอง", seller: "กลุ่มอาชีพสตรีบ้านขุนชำนาญ", description: "ราคา 650 บาท", phone: "0945203698", img: "assets/img/default.jpg" },
+    { id: 47, name: "HLS หมอนคอนทัวร์", category: "cloth", district: "เมืองชลบุรี", seller: "SALEIOV", description: "ราคา 350 บาท", phone: "0876666377", img: "assets/img/default.jpg" },
+    { id: 48, name: "ปลอกหมอนหนุน", category: "cloth", district: "ศรีราชา", seller: "TN BEDTIME ทีเอ็น เบดไทม์", description: "ราคา 80 บาท", phone: "0925873881", img: "assets/img/default.jpg" },
+    { id: 49, name: "ผ้าบาติกลายบัวสวรรค์", category: "cloth", district: "บ่อทอง", seller: "สุวรรณบาติก", description: "ราคา 600 บาท", phone: "0899365405", img: "assets/img/default.jpg" },
+    { id: 50, name: "ผ้าตกแต่ง", category: "cloth", districtthong: "สัตหีบ", seller: "Patanavy", description: "ราคา 12,000 บาท", phone: "0897528612", img: "assets/img/default.jpg" },
+    { id: 51, name: "กระเป๋าผ้า Ecoprint", category: "cloth", district: "บ่อทอง", seller: "หัตถกรรม Ecoprint Bothong", description: "ราคา  บาท", phone: "0971403901", img: "assets/img/default.jpg" },
+    { id: 52, name: "กระเป๋าถัก", category: "cloth", district: "บางละมุง", seller: "Chalee hand 2 make", description: "ราคา 400 บาท", phone: "0869575819", img: "assets/img/default.jpg" },
+    { id: 53, name: "กระเป๋าสานเส้นพลาสติก", category: "cloth", district: "เมืองชลบุรี", seller: "กลุ่มแม่บ้านเกษตรกรบ้านสวน", description: "ราคา 350 บาท", phone: "0824709684", img: "assets/img/default.jpg" },
+    { id: 54, name: "กระเป๋าผ้าบาติก", category: "cloth", district: "พนัสนิคม", seller: "Ban Chang design", description: "ราคา 1,250 บาท", phone: "0818658682", img: "assets/img/default.jpg" },
+    { id: 55, name: "เครื่องแต่งกาย", category: "cloth", district: "เมืองชลบุรี", seller: "นาป่าบูติก", description: "ราคา 400-650 บาท", phone: "0909872954", img: "assets/img/default.jpg" },
+    { id: 56, name: "ผ้าบาติก", category: "cloth", district: "พนัสนิคม", seller: "พฤกษาบาติก", description: "ราคา 1,200 บาท", phone: "0818647628", img: "assets/img/default.jpg" },
+    { id: 57, name: "ต่างหูบางแสน", category: "cloth", district: "เมืองชลบุรี", seller: "Stone Design", description: "ราคา 150 บาท", phone: "0852288879", img: "assets/img/default.jpg" },
+    { id: 58, name: "สร้อยคอหาดพัทยา", category: "cloth", district: "เมืองชลบุรี", seller: "Stone design", description: "ราคา 1,200 บาท", phone: "0852288879", img: "assets/img/สร้อยคอหาดพัทยา Stoned designs.jpg" },
+    { id: 59, name: "สร้อยข้อมือหินสีมงคล", category: "cloth", district: "เมืองชลบุรี", seller: "Stone design", description: "ราคา 350 บาท", phone: "0852288879", img: "assets/img/default.jpg" },
+    { id: 60, name: "เสื้อเขียนลายบาติก", category: "cloth", district: "พนัสนิคม", seller: "บาติกเขียนลายบ้านช้าง", description: "ราคา 850 บาท", phone: "0818658682", img: "assets/img/default.jpg" },
+    { id: 61, name: "เสื้อเชิ้ตบาติก", category: "cloth", district: "พนัสนิคม", seller: "พฤกษาบาติก", description: "ราคา 950 บาท", phone: "0818647628", img: "assets/img/default.jpg" },
+    { id: 62, name: "เสื้อดอกประดู่สีฟ้า", category: "cloth", district: "พฤกษาบาติก", seller: "Stone design", description: "ราคา 750 บาท", phone: "0818647628", img: "assets/img/default.jpg" },
+    { id: 63, name: "เสื้อลินินเพ้นท์", category: "cloth", district: "ศรีราชา", seller: "Paint dee", description: "ราคา 1,500 บาท", phone: "0896071387/0918714756", img: "assets/img/default.jpg" },
+    { id: 64, name: "เสื้อสำเร็จรูปผ้าไหม", category: "cloth", district: "เมืองชลบุรี", seller: "กันตยาดาผ้าไทย", description: "ราคา 1,900 บาท", phone: "0896070259", img: "assets/img/default.jpg" },
+    { id: 65, name: "หมอนอิงสมอเรือ", category: "cloth", district: "สัตหีบ", seller: "Patanavy", description: "ราคา 790 บาท", phone: "0897528612", img: "assets/img/default.jpg" },
+    { id: 66, name: "เข็มขัดหนัง", category: "cloth", district: "ศรีราชา", seller: "วิชญ์ธนัญภพ", description: "ราคา ส่วนท้องกว้าง 1.5 นิ้ว 3,500 บาท ส่วนกระดูกหลังกว้าง 1.5 นิ้ว 2,500 บาท", phone: "0944166339", img: "assets/img/default.jpg" },
+    { id: 67, name: "ผลิตภัณฑ์ผ้าทอมือ", category: "cloth", district: "เมืองชลบุรี", seller: "คุณย่าท่าน", description: "ราคา 59-3,800 บาท", phone: "0965932414", img: "assets/img/default.jpg" },
+    { id: 68, name: "ยางมัดผมจากเศษผ้า", category: "cloth", district: "บางละมุง", seller: "Apple กิ๊บเก๋", description: "ราคา 35 บาท", phone: "0816506246", img: "assets/img/default.jpg" },
+    { id: 69, name: "กิ๊บติดผมจากเศษผ้า", category: "cloth", district: "บางละมุง", seller: "Apple กิ๊บเก๋", description: "ราคา 20 บาท", phone: "0965932414", img: "assets/img/default.jpg" },
+    { id: 71, name: "กระเป๋า NAVY", category: "cloth", district: "สัตหีบ", seller: "กลุ่มกระเป๋า NAVY", description: "ราคา 590 บาท", phone: "0898344995", img: "assets/img/กระเป๋า NAVY กลุ่มกระเป๋า NAVY.jpg" },
+    { id: 72, name: "ผ้าทอลายขัด", category: "cloth", district: "เมืองชลบุรี", seller: "คุณย่าท่าน", description: "ราคา 600-1,800 บาท", phone: "0965932414", img: "assets/img/default.jpg" },
+    { id: 73, name: "เรือพระเจ้าตาก", category: "decor", district: "บ้านบึง", seller: "ชาตรีหัตถศิลป์", description: "ราคา 36,000 บาท", phone: "0818367364", img: "assets/img/default.jpg" },
+    { id: 74, name: "เรือฉลอม", category: "decor", district: "บ้านบึง", seller: "ชาตรีหัตถศิลป์", description: "ราคา 36,000 บาท", phone: "0818367364", img: "assets/img/default.jpg" },
+    { id: 75, name: "มาลัยดอกขจร", category: "decor", district: "บ้านบึง", seller: "บ้านน้ำอ้อยร้านงานฝีมือ", description: "ราคา 1,800 บาท", phone: "0931830741", img: "assets/img/default.jpg" },
+    { id: 76, name: "ครกหินอ่างศิลาปิดฝา", category: "decor", district: "เมืองชลบุรี", seller: "ลี้เซ๊้ยงฮวด", description: "ราคา 6,500 บาท", phone: "038397205,0813272917", img: "assets/img/default.jpg" },
+    { id: 77, name: "ที่วางโทรศัพท์ต้นสน", category: "decor", district: "บ้านบึง", seller: "บริษัท สตูป้า ศูนย์เก้า จำกัด", description: "ราคา 280 บาท", phone: "0819033854", img: "assets/img/default.jpg" },
+    { id: 78, name: "ที่ใส่ทิชชู่(L)", category: "decor", district: "บ้านบึง", seller: "บริษัท สตูป้า ศูนย์เก้า จำกัด", description: "ราคา 365 บาท", phone: "0819033854", img: "assets/img/default.jpg" },
+    { id: 79, name: "พวงมาลัยมะลิทิชชู่", category: "decor", district: "เมืองชลบุรี", seller: "วัลฤดี", description: "ราคา 1,800 บาท", phone: "0959096956", img: "assets/img/default.jpg" },
+    { id: 80, name: "ผลิตภัณฑ์จากไม้ปืนหนังยาง", category: "decor", district: "ศรีราชา", seller: "SW Rubber Brand Gun", description: "ราคา ปืนสั้น 500 บาท ปืนยาว 2,500 บาท", phone: "0836866956", img: "assets/img/default.jpg" },
+    { id: 81, name: "นาฬิกาแขวนกลม", category: "decor", district: "บ้านบึง", seller: "บริษัท สตูป้า ศูนย์เก้า จำกัด", description: "ราคา 769 บาท", phone: "0819033854", img: "assets/img/นาฬิกาแขวนกลม Mori.jpg" },
+    { id: 82, name: "ฝาชีตะแกรงลายไทย", category: "decor", district: "พนัสนิคม", seller: "วิไลภัณฑ์", description: "ราคา 900 บาท", phone: "0850902402", img: "assets/img/default.jpg" },
+    { id: 83, name: "จักสานพลาสติก", category: "decor", district: "ศรีราชา", seller: "กลุ่มจักสานหนองน้ำดำ", description: "ตะกร้า ขนาด M 139 บาท ขนาด L 159 บาท กระเช้าของขวัญ 100 บาท", phone: "0813778045", img: "assets/img/default.jpg" },
+    { id: 84, name: "การ์ดอวยพรศิลปะการม้วนกระดาษ", category: "decor", district: "พนัสนิคม", seller: "บ้านกระดาษสวย", description: "ราคา 180 บาท", phone: "0806452772", img: "assets/img/การ์ดอวยพรศิลปะ การม้วนกระดาษ บ้านกระดาษสวย.jpg" },
+    { id: 85, name: "พวงกุญแจไหมพรม", category: "decor", district: "เกาะสีชัง", seller: "กลุ่มลูกปัดสีชังร้อยรัก", description: "ราคา 129 บาท", phone: "0657204451", img: "assets/img/default.jpg" },
+    { id: 86, name: "ไม้กวาดดอกหญ้า", category: "decor", district: "บ่อทอง", seller: "กระพงศ์ทอง", description: "ราคา 50 บาท", phone: "0847789577", img: "assets/img/default.jpg" },
+    { id: 87, name: "แก้วตัดจากขวด", category: "decor", district: "เมืองชลบุรี", seller: "Bottles Story", description: "ราคา 150 บาท", phone: "0617502828", img: "assets/img/default.jpg" },
+    { id: 88, name: "สมุดทำมือ", category: "decor", district: "เมืองชลบุรี", seller: "กลุ่มสตรีหมู่บ้านกรีนวิลล์", description: "ราคา 550 บาท", phone: "0860832142", img: "assets/img/default.jpg" },
+    { id: 89, name: "โคมไฟขวด", category: "decor", district: "เมืองชลบุรี", seller: "Bottles Story", description: "ราคา 390 บาท", phone: "0617502828", img: "assets/img/default.jpg" },
+    { id: 90, name: "ดอกกุหลาบ", category: "decor", district: "บ้านบึง", seller: "บ้านน้ำอ้อยร้านงานฝีมือ", description: "ราคา 400 บาท", phone: "0931830714", img: "assets/img/default.jpg" },
+    { id: 91, name: "กล้วยไม้", category: "decor", district: "ศรีราชา", seller: "กลุ่มกล้วยไม้ศรีราขา", description: "ราคา  บาท", phone: "0819200725ฝ0817810187", img: "assets/img/default.jpg" },
+    { id: 92, name: "ตุ๊กตาดินไทยวิจิตร", category: "decor", district: "สัตหีบ", seller: "ตุ๊กตาดินไทยวิจิตร", description: "ราคา ขนาดใหญ่ 19,000 บาท ขนาดเล็กเดี่ยว 2,500 บาท", phone: "0850821989", img: "assets/img/default.jpg" },
+    { id: 93, name: "ดอกบัว", category: "decor", district: "เมืองชลบุรี", seller: "วัลฤดี", description: "ราคา 1,700 บาท", phone: "0959096956", img: "assets/img/default.jpg" },
+    { id: 94, name: "กระเป๋าพวงกุญแจ", category: "decor", district: "บางละมุง", seller: "กาญจนา", description: "ราคา 50 บาท", phone: "0845295335", img: "assets/img/default.jpg" },
+    { id: 95, name: "น้ำกระเจี๊ยบ", category: "drink", district: "เมืองชลบุรี", seller: "วราภรณ์", description: "ราคา 20 บาท", phone: "0819832468", img: "assets/img/default.jpg" },
+    { id: 96, name: "น้ำฟักข้าว", category: "drink", district: "เกาะจันทร์", seller: "Green Light กรีนไลท์", description: "ราคา 100 บาท", phone: "0868914946", img: "assets/img/default.jpg" },
+    { id: 97, name: "น้ำมัลเบอร์รี่", category: "drink", district: "เกาะจันทร์", seller: "Green Light กรีนไลท์", description: "ราคา 35 บาท", phone: "0868914946", img: "assets/img/default.jpg" },
+    { id: 98, name: "น้ำสำรอง", category: "drink", district: "บ่อทอง", seller: "น้ำสำรอง", description: "ราคา 15 บาท", phone: "0814041464", img: "assets/img/default.jpg" },
+    { id: 99, name: "น้ำเก๊กฮวย", category: "drink", district: "บ่อทอง", seller: "น้ำเก๊กฮวย", description: "ราคา 10 บาท", phone: "0814041464", img: "assets/img/default.jpg" },
+    { id: 100, name: "น้ำสมุนไพร", category: "drink", district: "พนัสนิคม", seller: "กลุ่มเกษตรกรไร้สารพิษตำบลนาวังหิน", description: "ราคา 10 บาท", phone: "084072979", img: "assets/img/default.jpg" },
+    { id: 101, name: "น้ำฝรั่ง", category: "drink", district: "เมืองชลบุรี", seller: "วราภรณ์", description: "ราคา 20 บาท", phone: "0819832468", img: "assets/img/default.jpg" },
+    { id: 102, name: "น้ำมะกรูด", category: "drink", district: "พนัสนิคม", seller: "กลุ่มเกษตรกรไร้สารพิษตำบลนาวังหิน", description: "ราคา 10 บาท", phone: "0841072979", img: "assets/img/default.jpg" },
+    { id: 103, name: "ชาอู่หลงสดพร้อมดื่ม(ตราชาโบว์)", category: "drink", district: "เมืองชลบุรี", seller: "คุณนฤมล ทองเจริญ", description: "ราคา 20 บาท", phone: "0838140708", img: "assets/img/default.jpg" },
+    { id: 104, name: "ชามะลิสดพร้อมดื่ม(ตราชาโบว์)", category: "drink", district: "เมืองชลบุรี", seller: "คุณนฤมล ทองเจริญ", description: "ราคา 20 บาท", phone: "0838140708", img: "assets/img/default.jpg" },
+    { id: 105, name: "ชาขาวสดพร้อมดื่ม(ตราชาโบว์)", category: "drink", district: "เมืองชลบุรี", seller: "คุณนฤมล ทองเจริญ", description: "ราคา 20 บาท", phone: "0838140708", img: "assets/img/default.jpg" },
+    { id: 106, name: "น้ำลูกสำรอง", category: "drink", district: "เกาะจันทร์", seller: "วิสาหกิจชุมชนกลุ่มแม่บ้านเกษตรกร 11 ร่วมใจ", description: "ราคา 20 บาท", phone: "0868914946", img: "assets/img/default.jpg" },
+    { id: 107, name: "น้ำอัญชันน้ำผึ้งมะนาว", category: "drink", district: "บ่อทอง", seller: "ร้านอิ่มสุข", description: "ราคา 20 บาท", phone: "0969614929", img: "assets/img/default.jpg" },
+    { id: 108, name: "น้ำมัลเบอร์รี่", category: "drink", district: "สัตหีบ", seller: "กลุ่มเกษตรกรไร้สารพิษตำบลนาวังหิน", description: "ราคา 17 บาท", phone: "0942495096", img: "assets/img/default.jpg" },
+    { id: 109, name: "น้ำอ้อยคั้นสด", category: "drink", district: "พนัสนิคม", seller: "ศูนย์การเรียนรู้ทฤษฎีใหม่โคกหนองนาโมเดล", description: "ราคา 10 บาท", phone: "0871331206", img: "assets/img/default.jpg" },
+    { id: 110, name: "น้ำนมข้าวโพด", category: "drink", district: "เกาะจันทร์", seller: "กลุ่มเกษตรกรปลอดภัยไร่รักษ์สุข", description: "ราคา 25 บาท", phone: "0803646152", img: "assets/img/default.jpg" },
+    { id: 111, name: "ยาหม่องเขียว", category: "herb", district: "บางละมุง", seller: "ย่าทิม ยาหม่องเขียว", description: "ราคา 80 บาท", phone: "0816262805", img: "assets/img/default.jpg" },
+    { id: 112, name: "Nature Hair Serum", category: "herb", district: "ศรีราชา", seller: "EVO Madrid", description: "ราคา 450 บาท", phone: "0879418015", img: "assets/img/default.jpg" },
+    { id: 113, name: "Moringa Shampoo", category: "herb", district: "ศรีราชา", seller: "EVO Madrid", description: "ราคา 575 บาท", phone: "0879418015", img: "assets/img/default.jpg" },
+    { id: 114, name: "สบู่เปลือกมังคุด", category: "herb", district: "ศรีราชา", seller: "Milagro", description: "ราคา 30 กรัม 40 บาท 50 กรัม 60 บาท 90 กรัม 100 บาท", phone: "0818322238/0841449452", img: "assets/img/default.jpg" },
+    { id: 115, name: "สติ๊กเกอร์ไล่ยุง", category: "herb", district: "ศรีราชา", seller: "Bug guard", description: "ราคา 160 บาท", phone: "0894789551", img: "assets/img/default.jpg" },
+    { id: 116, name: "ชุดพรรณกร", category: "herb", district: "เมืองชลบุรี", seller: "Piyamas ปิยะมาศ", description: "ราคา  ชุดละ 4 หลอด 480 บาท", phone: "090959995,0804145656", img: "assets/img/default.jpg" },
+    { id: 117, name: "สมุนไพรสัตว์เลี้ยง(ชุด pet Skincare)", category: "herb", district: "ศรีราชา", seller: "ion ไออ้อน", description: "ราคา 499 บาท", phone: "0896803765,0894587711", img: "assets/img/default.jpg" },
+    { id: 118, name: "สมุนไพรสัตว์เลี้ยง(แชมพูสูตรขมิ้นชัน)", category: "herb", district: "ศรีราขา", seller: "ion ไออ้อน", description: "ราคา 150 บาท", phone: "0896803765,0894587711", img: "assets/img/default.jpg" },
+    { id: 119, name: "Marder Nature Facial Soap", category: "herb", district: "ศรีราชา", seller: "Marder", description: "ราคา 100 บาท", phone: "0814864931", img: "assets/img/default.jpg" },
+    { id: 120, name: "ผลิตภัณฑ์บำรุงเส้นผมดอกอัญชัน", category: "herb", district: "พนัสนิคม", seller: "ชวน Chuan", description: "ราคา 150 บาท", phone: "0891205897", img: "assets/img/default.jpg" },
+    { id: 121, name: "สบู่แฟนซี", category: "herb", district: "เมืองชลบุรี", seller: "Beelle", description: "ราคา 99 บาท", phone: "0965932414", img: "assets/img/default.jpg" },
+    { id: 122, name: "ถ่านดูดกลิ่น", category: "herb", district: "บางละมุง", seller: "Double Y chacoal", description: "ราคา 69 บาท", phone: "0818032887", img: "assets/img/default.jpg" },
+    { id: 123, name: "ชายนี่เนล Shiny nail", category: "herb", district: "เมืองชลบุรี", seller: "เอ็น แอล อาร์", description: "ราคา 210-290 บาท", phone: "085032153", img: "assets/img/default.jpg" },
+    { id: 124, name: "ยาบรรเทาอาการปวดเมื่อย", category: "herb", district: "เมืองชลบุรี", seller: "สมุนไพรอุดม", description: "ราคา 210-250 บาท", phone: "038722341", img: "assets/img/default.jpg" },
+    { id: 125, name: "สบู่นมแพะตราอัสลา", category: "herb", district: "บางละมุง", seller: "ประภาศรี สาริกาเกศ", description: "ราคา 159 บาท", phone: "0858650165", img: "assets/img/default.jpg" },
+    { id: 126, name: "สบู่ญาอาภา", category: "herb", district: "บางละมุง", seller: "ญาอาภา", description: "ราคา 69 บาท", phone: "0869009849", img: "assets/img/default.jpg" },
+    { id: 127, name: "ถ่านอัดแท่ง", category: "herb", district: "ศรีราชา", seller: "มนตรี", description: "ราคา 20 บาท", phone: "0898926347,0800651139", img: "assets/img/default.jpg" },
+    { id: 128, name: "สบู่สมุนไพรออแกนิค", category: "herb", district: "เมืองชลบุรี", seller: "MARASEE", description: "ราคา 290 บาท", phone: "0984160781", img: "assets/img/default.jpg" },
+    { id: 129, name: "ขนมงาพอง (งาดำ)", category: "food", district: "พนัสนิคม", seller: "ตั้งเซ่งเฮง", description: "ราคา 45 บาท", phone: "0932651595", img: "assets/img/default.jpg" },
+    { id: 130, name: "น้ำมันนวดตัวเพื่อสุขภาพ", category: "herb", district: "พนัสนิคม", seller: "กลุ่มแปรรูปผลิตภัณฑ์จากสมุนไพรบ้านตม", description: "ราคา 120 บาท", phone: "0891205897", img: "assets/img/default.jpg" },
+    { id: 131, name: "หมักผมดอกอัญชัน", category: "herb", district: "พนัสนิคม", seller: "กลุ่มแปรรูปผลิตภัณฑ์จากสมุนไพรบ้านตม", description: "ราคา 50 บาท", phone: "0891205897", img: "assets/img/default.jpg" },
+    { id: 132, name: "ฝาชีตะแกรงลายเพ้นท์ลาย", category: "herb", district: "พนัสนิคม", seller: "วิไลภัณฑ์", description: "ราคา 900 บาท", phone: "0850902402", img: "assets/img/default.jpg" },
+    { id: 133, name: "โคมไฟดอกไม้ผ้าใยบัว", category: "decor", district: "พนัสนิคม", seller: "กลุ่มโคมดอกไม้ผ้าใยบัว", description: "ราคา 349 บาท", phone: "0865128532", img: "assets/img/default.jpg" },
+    { id: 134, name: "น้ำพริกเห็ด", category: "herb", district: "บ่อทอง", seller: "สุกัญญา โปกุล", description: "ราคา 150 บาท", phone: "0814041464", img: "assets/img/default.jpg" },
+    { id: 135, name: "ดอกไม้ผ้าใยบัว", category: "decor", district: "พนัสนิคม", seller: "โคมไฟดอกไม้ผ้าใยบัว", description: "ราคา 199 บาท", phone: "0865128532", img: "assets/img/default.jpg" },
+    { id: 136, name: "กิ๊กยิ้มกะหรี่พั๊ฟ", category: "food", district: "บ่อทอง", seller: "ธัญมน โมนัยกุล", description: "ราคา 100 บาท", phone: "0815503973", img: "assets/img/default.jpg" },
+    { id: 137, name: "น้ำพริกกากหมู", category: "food", district: "บ่อทอง", seller: "ประภาพร จันทร์อุดม", description: "ราคา 150 บาท", phone: "0983489129", img: "assets/img/default.jpg" },
+    { id: 138, name: "รังผึ้งแท้", category: "food", district: "บ่อทอง", seller: "แหลมทองฮันนี่ฟาร์ม", description: "ราคา 89 บาท", phone: "0865535556", img: "assets/img/default.jpg" },
+    { id: 139, name: "น้ำผึ้งดอกไม้ป่า", category: "food", district: "บ่อทอง", seller: "กลุ่มเลี้ยงผึ้งบ้านหนองใหญ่", description: "ราคา 900 บาท", phone: "0999697493", img: "assets/img/default.jpg" },
+    { id: 140, name: "แยมมะกรูด", category: "food", district: "เกาะจันทร์", seller: "จิราทิตย์ แก้วงาม", description: "ราคา 120 บาท", phone: "0868914946", img: "assets/img/default.jpg" },
+    { id: 141, name: "ทองม้วนงาดำ (รสหวาน)", category: "food", district: "เกาะจันทร์", seller: "มณีจันทร์", description: "ราคา 50 บาท", phone: "0876055551", img: "assets/img/ทองม้วนงาดำ (รสหวาน) มณีจันทร์.jpg" },
+    { id: 142, name: "ทองม้วนงาดำ (รสเค็ม)", category: "food", district: "เกาะจันทร์", seller: "มณีจันทร์", description: "ราคา 50 บาท", phone: "0876055551", img: "assets/img/default.jpg" },
+    { id: 143, name: "ทองม้วนไส้หมูหยอง 2 รสชาติสายชล", category: "food", district: "บ้านบึง", seller: "วีณา อติกานต์กุล", description: "ราคา 300 บาท", phone: "0812543431", img: "assets/img/default.jpg" },
+    { id: 144, name: "ข้าวกล้องไรซ์เบอร์รี่", category: "food", district: "บ้านบึง", seller: "นายวิทยา แสงสว่าง", description: "ราคา 80 บาท", phone: "0956921693", img: "assets/img/default.jpg" },
+    { id: 145, name: "ข้าวกล้องหอมมะลิ 105", category: "food", district: "บ้านบึง", seller: "นายวิทยา แสงสว่าง", description: "ราคา 60 บาท", phone: "0956921693", img: "assets/img/default.jpg" },
+    { id: 146, name: "หมูหยอง", category: "food", district: "บ้านบึง", seller: "นายนิรันดร์ พงศ์อภิรักษ์", description: "ราคา  บาท", phone: "038201426", img: "assets/img/default.jpg" },
+    { id: 147, name: "น้ำยาบ้วนปากสมุนไพร", category: "herb", district: "บ้านบึง", seller: "กลุ่มเกษตรกรแม่บ้านหนองบอนแดง", description: "ราคา  บาท", phone: "0909136999, 0812948376", img: "assets/img/default.jpg" },
+    { id: 148, name: "ที่วางโทรศัพท์ต้นสน", category: "decor", district: "บ้านบึง", seller: "นางสุพิศ วิริยบัณฑร", description: "ราคา 280 บาท", phone: "0819033854", img: "assets/img/default.jpg" },
+    { id: 149, name: "กางเกงเลมัดย้อม", category: "cloth", district: "เกาะสีชัง", seller: "นางสุจิต แอลอง", description: "ราคา 200 บาท", phone: "0892504981", img: "assets/img/default.jpg" },
+    { id: 150, name: "เสื้อมัดย้อมสีและคราม", category: "cloth", district: "เกาะสีชัง", seller: "นางสุจิต แอลอง", description: "ราคา 150-250 บาท", phone: "0892504981", img: "assets/img/default.jpg" },
+    { id: 151, name: "ผ้าบาติก", category: "cloth", district: "เกาะสีชัง", seller: "สุมาลี ภังคะญาณ", description: "ราคา 600 บาท", phone: "0890587864", img: "assets/img/ผ้าบาติก.jpg" },
+    { id: 152, name: "ผ้าคลุมไหล่มัดย้อม", category: "cloth", district: "เกาะสีชัง", seller: "นางสุจิต แอลอง", description: "ราคา 250 บาท", phone: "0892504981", img: "assets/img/default.jpg" },
+    { id: 153, name: "พวงกุญแจปลาหมึกถักไหมพรม", category: "decor", district: "เกาะสีชัง", seller: "นางสุจิต แอลอง", description: "ราคา 250 บาท", phone: "0892504981", img: "assets/img/default.jpg" },
+    { id: 154, name: "พวงกุญแจกระรอกขาว", category: "decor", district: "เกาะสีชัง", seller: "นภาพร โพธิ์แสง(กลุ่มลูกปัดสีชังร้อยรัก)", description: "ราคา 69 บาท", phone: "0657204451", img: "assets/img/default.jpg" },
+    { id: 155, name: "หมึกแห้ง", category: "food", district: "เกาะสีชัง", seller: "แม่ราตรีเกาะสีชัง", description: "ราคา 100-600 บาท", phone: "0625566737", img: "assets/img/default.jpg" },
+    { id: 156, name: "หมึกแดดเดียว", category: "food", district: "เกาะสีชัง", seller: "แม่ราตรีเกาะสีชัง", description: "ราคา 100-500 บาท", phone: "0625566737", img: "assets/img/default.jpg" },
+   
+
+    
+];
+
+const categoryNames = {
+    food: 'อาหาร', drink: 'เครื่องดื่ม', cloth: 'ผ้าและเครื่องแต่งกาย', decor: 'ของใช้/ของตกแต่ง', herb: 'สมุนไพรที่ไม่ใช่อาหาร'
+};
+
+// ใช้รูปแทนรูปเดิมที่โดนบล็อก
+const fallbackImg = "";
+
+function renderProducts(products) {
+    const productGrid = document.getElementById('productGrid');
+    const countSpan = document.getElementById('productCount');
+    
+    if (!productGrid) return;
+    if (countSpan) countSpan.innerText = products.length;
+
+    if (products.length === 0) {
+        productGrid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: #64748b;">
+                <p>ไม่พบผลิตภัณฑ์ที่ตรงตามเงื่อนไข</p>
+            </div>`;
+        return;
+    }
+
+    productGrid.innerHTML = products.map(item => `
+        <a href="product-detail.html?id=${item.id}" class="product-card">
+            <div class="product-img-wrapper">
+                <span class="product-badge">${categoryNames[item.category] || 'OTOP'}</span>
+                <img class="product-img" src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='${fallbackImg}';">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${item.name}</h3>
+                <div class="product-seller"><i class="fa-solid fa-store"></i> ${item.seller}</div>
+                <div class="product-location">
+                    <i class="fa-solid fa-location-dot"></i> อ.${item.district} จ.ชลบุรี
+                </div>
+            </div>
+        </a>
+    `).join('');
+}
+
+function filterProducts() {
+    const categoryValue = document.getElementById('categorySelect')?.value || 'all';
+    const districtValue = document.getElementById('districtSelect')?.value || 'all';
+    const searchKeyword = document.getElementById('searchInput')?.value.trim().toLowerCase() || '';
+
+    const filtered = otopProducts.filter(item => {
+        const matchCategory = (categoryValue === 'all') || (item.category === categoryValue);
+        const matchDistrict = (districtValue === 'all') || (item.district === districtValue);
+        const matchKeyword = item.name.toLowerCase().includes(searchKeyword) || item.seller.toLowerCase().includes(searchKeyword);
+
+        return matchCategory && matchDistrict && matchKeyword;
+    });
+
+    renderProducts(filtered);
+}
+
+function resetFilters() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('districtSelect').value = 'all';
+    document.getElementById('categorySelect').value = 'all';
+    filterProducts();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFromUrl = urlParams.get('category');
+    
+    if (categoryFromUrl && document.getElementById('categorySelect')) {
+        document.getElementById('categorySelect').value = categoryFromUrl;
+    }
+
+    document.getElementById('categorySelect')?.addEventListener('change', filterProducts);
+    document.getElementById('districtSelect')?.addEventListener('change', filterProducts);
+    document.getElementById('searchInput')?.addEventListener('input', filterProducts);
+
+    filterProducts();
+});
+</script>
+
+</body>
+</html>
